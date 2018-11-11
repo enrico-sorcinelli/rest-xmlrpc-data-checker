@@ -1,0 +1,86 @@
+=== REST XML-RPC Data Checker ===
+Contributors: enrico.sorcinelli
+Tags: json, rest, xmlrpc, api, security, admin, theme
+Requires at least: 4.4
+Requires PHP: 5.2.4
+Tested up to: 4.9.8
+Stable tag: 1.0.0
+License: GPLv2 or later
+
+REST XML-RPC Data Checker allow to check JSON REST and XML-RPC API requests and grant access permissions.
+
+== Description ==
+
+JSON REST API and XML-RPC API are powerful ways to remotely interact with WordPress.
+
+If you don't have external applications that need to communicate with your WordPress instance using JSON REST API or XML-RPC API you should disable access to them for external requests.
+
+In the standard WordPress installation JSON REST API and XML-RPC API are enabled by default and even if you could do the stuff by writing your own code using native filters, this plugin aims to help you to control JSON REST API and XML-RCP API accesses from the administration panel.
+
+== Basic Features
+
+* **Disable REST API** interface for unlogged users.
+* **Disable JSONP support** on REST API.
+* **Add Basic Authentication** to REST API.
+* **Setup trusted users, IP/Networks and endpoints** for unlogged users REST requests.
+* **Change REST endpoint prefix**.
+* **Disable XML-RPC API** interface.
+* **Setup trusted users, IP/Networks and methods** for XML-RPC requests.
+
+== Installation ==
+
+This section describes how to install the plugin and get it working.
+
+1. Upload the plugin files to the `/wp-content/plugins/rest-xmlrpc-data-checker` directory, or install the plugin through the WordPress _Plugins_ screen directly.
+1. Activate the plugin through the _Plugins_ screen in WordPress.
+
+== Usage ==
+
+Once the plugin is installed you can control settings in the following ways:
+
+* Using the _Settings->REST XML-RPC Data Checker_ administration screen.
+* Programmatically, by using `rest_xmlrpc_data_checker_settings` filter (see below).
+
+== API ==
+
+= Hooks =
+
+**`rest_xmlrpc_data_checker_settings`**
+
+Filter allowing to display or not the plugin settings page in the administration.
+
+`apply_filters( 'rest_xmlrpc_data_checker_settings', array $settings )`
+
+**`rest_xmlrpc_data_checker_admin_settings`**
+
+Filter allowing to display or not the plugin settings page in the administration.
+
+`apply_filters( 'rest_xmlrpc_data_checker_admin_settings', boolean $display )`
+
+**`rest_xmlrpc_data_checker_rest_error`**
+
+Filter JSON REST authentication error after plugin checks.
+
+`apply_filters( 'rest_xmlrpc_data_checker_rest_error', WP_Error|boolean $result )`
+
+**`xmlrpc_before_insert_post`**
+
+Filter XML-RPC post data to be inserted via XML-RPC before any action.
+
+`apply_filters( 'xmlrpc_before_insert_post', array|IXR_Error $content_struct, WP_User $user )`
+
+== Frequently Asked Questions ==
+
+= Does it work with Gutenberg? =
+
+Yes
+
+== Screenshots ==
+
+1. The JSON REST settings section.
+2. The XML-RCP settings section.
+3. Enable XML-RPC and REST interfaces on user profile/user edit pages (available only for users with `edit_users` capability).
+
+== Changelog ==
+
+For REST XML-RPC Data Checker changelog, please see [the Releases page on GitHub](https://github.com/enrico-sorcinelli/rest-xmlrpc-data-checker/releases).
