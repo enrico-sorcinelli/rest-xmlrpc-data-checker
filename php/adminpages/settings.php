@@ -61,32 +61,19 @@ function cb_list( $args = array() ) {
 			<div id="postbox-container-2" class="postbox-container">
 
 <form method="post" action="options.php">
-
-<?php settings_fields( $params['prefix'] . 'settings' ); ?>
-<?php do_settings_sections( $params['prefix'] . 'settings' ); ?>
+	<input type="hidden" name="<?php echo esc_attr( $params['prefix'] . 'active_tab' ); ?>" value="rest">
+	<?php settings_fields( $params['prefix'] . 'settings' ); ?>
+	<?php do_settings_sections( $params['prefix'] . 'settings' ); ?>
 
 	<h2 class="nav-tab-wrapper wp-clearfix rest-xmlrpc-data-checker">
-		<a class="nav-tab rest-xmlrpc-data-checker nav-tab-active"><?php esc_html_e( 'REST', 'rest-xmlrpc-data-checker' ); ?></a>
-		<a class="nav-tab rest-xmlrpc-data-checker"><?php esc_html_e( 'XML-RPC', 'rest-xmlrpc-data-checker' ); ?></a>
-		<a class="nav-tab rest-xmlrpc-data-checker"><?php esc_html_e( 'Options', 'rest-xmlrpc-data-checker' ); ?></a>
+		<a class="nav-tab rest-xmlrpc-data-checker nav-tab-active" data-section="rest"><?php esc_html_e( 'REST', 'rest-xmlrpc-data-checker' ); ?></a>
+		<a class="nav-tab rest-xmlrpc-data-checker" data-section="xml-rpc"><?php esc_html_e( 'XML-RPC', 'rest-xmlrpc-data-checker' ); ?></a>
+		<a class="nav-tab rest-xmlrpc-data-checker" data-section="options"><?php esc_html_e( 'Options', 'rest-xmlrpc-data-checker' ); ?></a>
 	</h2>
 
 	<!-- REST section -->
 	<section class="rest-xmlrpc-data-checker">
 		<table class="form-table">
-			<tr>
-				<th scope="row">
-					<label for="<?php echo esc_attr( $params['prefix'] . 'settings_rest_url_prefix' ); ?>">
-						<?php esc_html_e( 'REST prefix', 'rest-xmlrpc-data-checker' ); ?>
-					</label>
-				</th>
-				<td>
-					<?php echo esc_html( get_site_url() ); ?>/<input name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][url_prefix]' ); ?>" type="text" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_url_prefix' ); ?>" value="<?php echo esc_attr( $params['settings']['rest']['url_prefix'] ); ?>">
-					<p class="description">
-						<?php esc_html_e( 'Allow to change REST prefix route.', 'rest-xmlrpc-data-checker' ); ?>
-					</p>
-				</td>
-			</tr>
 			<tr>
 				<th scope="row">
 					<?php esc_html_e( 'REST API', 'rest-xmlrpc-data-checker' ); ?>
@@ -108,6 +95,42 @@ function cb_list( $args = array() ) {
 			</tr>
 			<tr>
 				<th scope="row">
+					<label for="<?php echo esc_attr( $params['prefix'] . 'settings_rest_url_prefix' ); ?>">
+						<?php esc_html_e( 'REST prefix', 'rest-xmlrpc-data-checker' ); ?>
+					</label>
+				</th>
+				<td>
+					<?php echo esc_html( get_site_url() ); ?>/<input name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][url_prefix]' ); ?>" type="text" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_url_prefix' ); ?>" value="<?php echo esc_attr( $params['settings']['rest']['url_prefix'] ); ?>">
+					<p class="description">
+						<?php esc_html_e( 'Allows to change REST prefix route.', 'rest-xmlrpc-data-checker' ); ?>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row">
+					<?php esc_html_e( 'REST Links', 'rest-xmlrpc-data-checker' ); ?>
+				</th>
+				<td>
+					<fieldset>
+						<label>
+							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][remove_link_tag]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_remove_link_tag' ); ?>" value="1" <?php checked( 1, $params['settings']['rest']['remove_link_tag'] ); ?>">
+							<?php /* translators: %s tag */ echo sprintf( __( 'Remove REST API %s tag', 'rest-xmlrpc-data-checker' ), '<code>&lt;link&gt;</code>' ); ?>
+						</label>
+						<br>
+						<label>
+							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][remove_link_http_headers]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_remove_link_http_headers' ); ?>" value="1" <?php checked( 1, $params['settings']['rest']['remove_link_http_headers'] ); ?>">
+							<?php /* translators: %s tag */ echo sprintf( __( 'Remove REST API %s HTTP header', 'rest-xmlrpc-data-checker' ), '<code>Link</code>' ); ?>
+						</label>
+						<br>
+						<label>
+							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][remove_oembed_discovery_links]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_remove_oembed_discovery_links' ); ?>" value="1" <?php checked( 1, $params['settings']['rest']['remove_oembed_discovery_links'] ); ?>">
+							<?php /* translators: %s tag */ echo sprintf( __( 'Remove oEmbed discovery %s tags', 'rest-xmlrpc-data-checker' ), '<code>&lt;link&gt;</code>' ); ?>
+						</label>
+					</fieldset>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row">
 					<?php esc_html_e( 'Authentication', 'rest-xmlrpc-data-checker' ); ?>
 				</th>
 				<td>
@@ -121,7 +144,7 @@ function cb_list( $args = array() ) {
 							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][auth_method]' ); ?>" type="radio" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_auth_method_basic_auth' ); ?>" value="basic_auth" <?php checked( 'basic_auth', $params['settings']['rest']['auth_method'] ); ?>">
 							<?php esc_html_e( 'Use Basic Authentication', 'rest-xmlrpc-data-checker' ); ?>
 						</label>
-						<p class="description rest-xmlrpc-data-checker-indent"><?php esc_html_e( 'This allows you to restrict REST requests only for selected users. They have to supply username/password in the Basic Authentication header.', 'rest-xmlrpc-data-checker' ); ?></p>
+						<p class="description rest-xmlrpc-data-checker-indent"><?php /* translators: %s tag */ echo sprintf( __( 'This allows you to restrict REST requests only for selected users. They have to supply username/password in the %s HTTP header.', 'rest-xmlrpc-data-checker' ), '<code>Authorization</code>' ); ?></p>
 						<div class="update-nag rest_basic_auth_alert">
 							<b><?php esc_html_e( 'Your WordPress installation don\'t appear to run under a secure connection.', 'rest-xmlrpc-data-checker' ); ?></b>
 							<br>

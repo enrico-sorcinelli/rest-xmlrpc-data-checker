@@ -155,19 +155,23 @@ class REST_XMLRPC_Data_Checker {
 			get_option( self::$prefix . 'settings', array() ),
 			array(
 				'rest'    => array(
-					'url_prefix'             => rest_get_url_prefix(),
-					'disable'                => false,
-					'disable_jsonp'          => false,
-					'auth_method'            => 'none',
-					'apply_trusted_networks' => false,
-					'trusted_networks'       => '',
-					'apply_allowed_routes'   => false,
-					'allowed_routes'         => array(),
+					'url_prefix'                    => rest_get_url_prefix(),
+					'remove_link_tag'               => false,
+					'remove_oembed_discovery_links' => false,
+					'remove_link_http_headers'      => false,
+					'disable'                       => false,
+					'disable_jsonp'                 => false,
+					'auth_method'                   => 'none',
+					'trusted_users'                 => array(),
+					'apply_trusted_networks'        => false,
+					'trusted_networks'              => '',
+					'apply_allowed_routes'          => false,
+					'allowed_routes'                => array(),
 				),
 				'xmlrpc'  => array(
 					'disable'                => false,
 					'apply_trusted_users'    => false,
-					'trusted_users'          => '',
+					'trusted_users'          => array(),
 					'apply_trusted_networks' => false,
 					'trusted_networks'       => '',
 					'apply_allowed_methods'  => false,
@@ -225,7 +229,14 @@ class REST_XMLRPC_Data_Checker {
 	public static function plugin_uninstall() {
 		$options = get_option( self::$prefix . 'settings', true );
 		if ( isset( $options['options'] ) && ! empty( $options['options']['remove_plugin_settings'] ) ) {
+
+			// Delete plugin options.
 			delete_option( self::$prefix . 'settings' );
+
+			// Delete user's caps added by plugin.
+			$rest_xmlrpc_data_checker = self::get_instance();
+			unset( $_REQUEST[ self::$prefix . 'settings' ] );
+			$rest_xmlrpc_data_checker->_admin->update_caps();
 		}
 	}
 }

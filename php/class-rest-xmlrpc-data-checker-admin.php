@@ -75,9 +75,6 @@ class Admin {
 			return;
 		}
 
-		include_once ABSPATH . WPINC . '/class-IXR.php';
-		include_once ABSPATH . WPINC . '/class-wp-xmlrpc-server.php';
-
 		require_once REST_XMLRPC_DATA_CHECKER_BASEDIR . '/php/class-rest-xmlrpc-data-checker-users-wp-list-table.php';
 
 		// Menu settings.
@@ -127,6 +124,9 @@ class Admin {
 			foreach ( $admin_pages as $page ) {
 				add_action( 'admin_print_styles-' . $page, array( $this, 'load_css' ), 10, 0 );
 				add_action( 'admin_print_scripts-' . $page, array( $this, 'load_javascript' ), 10, 0 );
+
+				// Adds help_tab when settings page loads.
+				add_action( 'load-' . $page, array( $this, 'add_help_tab' ), 100 );
 			}
 		}
 
@@ -147,8 +147,10 @@ class Admin {
 			add_filter( 'plugin_action_links_rest-xmlrpc-data-checker/rest-xmlrpc-data-checker.php', array( $this, 'plugin_actions' ), 10, 4 );
 		}
 
-		add_action( 'update_option_' . $this->prefix . 'settings', array( $this, 'update_caps' ), 10, 2 );
+		add_action( 'update_option_' . $this->prefix . 'settings', array( $this, 'update_caps' ), 10, 3 );
+		add_action( 'add_option_' . $this->prefix . 'settings', array( $this, 'update_caps' ), 10, 2 );
 
+		add_filter( 'wp_redirect', array( $this, 'set_active_tab_wp_redirect' ), 10, 2 );
 	}
 
 	/**
@@ -241,7 +243,10 @@ class Admin {
 	 */
 	public function page_settings() {
 
-		// Get XML-RPC knows methods.
+		include_once ABSPATH . WPINC . '/class-IXR.php';
+		include_once ABSPATH . WPINC . '/class-wp-xmlrpc-server.php';
+
+		// Get XML-RPC known methods.
 		$xmlrpc         = new \wp_xmlrpc_server();
 		$xmlrpc_methods = array_keys( $xmlrpc->methods );
 		sort( $xmlrpc_methods );
@@ -253,7 +258,7 @@ class Admin {
 			$xmlrpc_methods_items[ $ns[0] ][] = $item;
 		}
 
-		// Get REST knows routes.
+		// Get REST known routes.
 		$rest_server     = rest_get_server();
 		$rest_namespaces = $rest_server->get_namespaces();
 		$rest_routes     = array_keys( $rest_server->get_routes() );
@@ -353,6 +358,22 @@ class Admin {
 	}
 
 	/**
+	 * Add hash to redirect url after saving in order to set active tab.
+	 *
+	 * @param string  $location Redirect Location.
+	 * @param integer $status   Redirect status.
+	 *
+	 * @return string
+	 */
+	public function set_active_tab_wp_redirect( $location, $status ) {
+		global $pagenow;
+		if ( 'options.php' === $pagenow && isset( $_REQUEST['option_page'] ) && $this->prefix . 'settings' === $_REQUEST['option_page'] ) {
+			$location .= ( isset( $_REQUEST[ $this->prefix . 'active_tab' ] ) ? '#' . $_REQUEST[ $this->prefix . 'active_tab' ] : '' );
+		}
+		return $location;
+	}
+
+	/**
 	 * Get user based on XML-RPC/REST caps.
 	 *
 	 * @param array $args {
@@ -406,10 +427,11 @@ class Admin {
 	/**
 	 * Update REST/XML-RPC user capabilities.
 	 *
-	 * @param array $old Old values.
-	 * @param array $new New values.
+	 * @param array  $old    Old values.
+	 * @param array  $new    New values.
+	 * @param string $option Option name.
 	 */
-	public function update_caps( $old, $new ) {
+	public function update_caps( $old, $new, $option = '' ) {
 
 		// Only worry about if the user has access.
 		if ( ! current_user_can( 'edit_users' ) ) {
@@ -431,6 +453,7 @@ class Admin {
 							'compare' => 'LIKE',
 						),
 					),
+					'number'     => -1,
 				)
 			);
 
@@ -453,4 +476,75 @@ class Admin {
 			}
 		}
 	}
+
+	/**
+	 * Add help admin settings screen.
+	 */
+	public function add_help_tab() {
+
+		global $pagenow;
+
+		// Get screen.
+		$screen = get_current_screen();
+
+		$add_sidebar = false;
+
+		$screen->add_help_tab(
+			array(
+				'id'      => 'overview',
+				'title'   => __( 'Overview', 'rest-xmlrpc-data-checker' ),
+				'content' => '<p>' . __( 'This screen is used for managing JSON REST and XML-RPC accesses and permissions to your WordPress installation.', 'rest-xmlrpc-data-checker' ) . '</p>'
+					. '<p>' . __( 'You must click the <strong>Save Changes</strong> button at the bottom of the screen for new settings to take effect.', 'rest-xmlrpc-data-checker' ) . '</p>',
+			)
+		);
+
+		$screen->add_help_tab(
+			array(
+				'id'      => 'rest',
+				'title'   => __( 'REST', 'rest-xmlrpc-data-checker' ),
+				'content' => '<p>' . __( 'The REST tab allows you to control JSON REST API requests to your WordPress installation.', 'rest-xmlrpc-data-checker' ) . '</p><ul>' .
+					'<li><strong>' . __( 'REST API', 'rest-xmlrpc-data-checker' ) . '</strong> &mdash; ' . __( 'Allows you to completely disable JSON REST requests for unlogged users and/or disable JSONP support in the REST API (regardless of authentication and trust settings). If you don\'t have external applications that need to communicate with your WordPress instance using JSON REST you are strongly encouraged to disable JSON REST API for unlogged users.', 'rest-xmlrpc-data-checker' ) . '</li>' .
+					'<li><strong>' . __( 'REST prefix', 'rest-xmlrpc-data-checker' ) . '</strong> &mdash; ' . __( 'Allows to change REST prefix route.', 'rest-xmlrpc-data-checker' ) . '</li>' .
+					'<li><strong>' . __( 'REST Links', 'rest-xmlrpc-data-checker' ) . '</strong> &mdash; ' . __( 'Allows to remove REST API and oEmbed Discovery <code>&lt;link&gt;</code> tags and REST API <code>Link</code> HTTP header added by WordPress to front-end pages.', 'rest-xmlrpc-data-checker' ) . '</li>' .
+					'</ul><p>' . __( 'If you need to leave REST JSON enabled, disable REST API interface for unlogged users and then grant accesses by using following settings:', 'rest-xmlrpc-data-checker' ) . '</p>' .
+					'<ul><li><strong>' . __( 'Authentication', 'rest-xmlrpc-data-checker' ) . '</strong> &mdash; ' . /* translators: %s HTTP header */ sprintf( __( 'The <strong>Use Basic Authentication</strong> option enable Basic Authentication as login method. The users have to supply username/password in the %s HTTP header and the access to JSON REST API is restricted only to selected users. If you enable this option, be sure to use SSL-secured connections.', 'rest-xmlrpc-data-checker' ), '<code>Authorization</code>' ) . '</li>' .
+					'<li><strong>' . __( 'Trusted netkwors', 'rest-xmlrpc-data-checker' ) . '</strong> &mdash; ' . __( 'Allows you to restrict JSON REST requests only if they come from selected IPs or netowrks.', 'rest-xmlrpc-data-checker' ) . '</li>' .
+					'<li><strong>' . __( 'Allowed routes', 'rest-xmlrpc-data-checker' ) . '</strong> &mdash; ' . __( 'Allows you to restrict JSON REST requests only for selected REST routes.', 'rest-xmlrpc-data-checker' ) . '</li>' .
+					'</ul>',
+			)
+		);
+
+		$screen->add_help_tab(
+			array(
+				'id'      => 'xml-rpc',
+				'title'   => __( 'XML-RPC', 'rest-xmlrpc-data-checker' ),
+				'content' => '<p>' . __( 'The XML-RPC tab allows you to control XML-RPC API requests to your WordPress installation.', 'rest-xmlrpc-data-checker' ) . '</p><ul>' .
+					'<li><strong>' . __( 'XML-RPC API', 'rest-xmlrpc-data-checker' ) . '</strong> &mdash; ' . __( 'Allows you to completely disable XML-RPC requests regardless of authentication and trust settings. If you don\'t have external applications that need to communicate with your WordPress instance using XML-RPC API you are strongly strongly encouraged to disable XML-RPC interface.', 'rest-xmlrpc-data-checker' ) . '</li></ul>' .
+					'<p>' . __( 'If you need to leave XML-RPC enabled, first of all be sure to use SSL-secured connections. Then you can restrict accesses by using following settings:', 'rest-xmlrpc-data-checker' ) . '</p><ul>' .
+					'<li><strong>' . __( 'Trusted users', 'rest-xmlrpc-data-checker' ) . '</strong> &mdash; ' . __( 'Allows you to restrict XML-RPC API access only to selected users.', 'rest-xmlrpc-data-checker' ) . '</li>' .
+					'<li><strong>' . __( 'Trusted netkwors', 'rest-xmlrpc-data-checker' ) . '</strong> &mdash; ' . __( 'Allows you to restrict XML-RPC API requests only if they come from selected IPs or netowrks.', 'rest-xmlrpc-data-checker' ) . '</li>' .
+					'<li><strong>' . __( 'Allowed methods', 'rest-xmlrpc-data-checker' ) . '</strong> &mdash; ' . __( 'Allows you to restrict XML-RPC API requests only for selected methods', 'rest-xmlrpc-data-checker' ) . '</li>' .
+					'</ul>',
+			)
+		);
+
+		$screen->add_help_tab(
+			array(
+				'id'      => 'options',
+				'title'   => __( 'Options', 'rest-xmlrpc-data-checker' ),
+				'content' => '<p>' . __( 'The Options tab allows you to perform following actions:', 'rest-xmlrpc-data-checker' ) . '</p><ul>' .
+					'<li><strong>' . __( 'Plugin settings', 'rest-xmlrpc-data-checker' ) . '</strong> &mdash; ' . __( 'Allows you to completely remove options on plugin removal including additional REST/XML-RPC user\'s capabilities added by plugin.', 'rest-xmlrpc-data-checker' ) . '</li>' .
+					'</ul>',
+				false,
+				1000,
+			)
+		);
+
+		$screen->set_help_sidebar(
+			'<p><strong>' . __( 'For more information:', 'rest-xmlrpc-data-checker' ) . '</strong></p>' .
+			'<p><a href="https://github.com/enrico-sorcinelli/rest-xmlrpc-data-checker/" target="_blank">' . __( 'Plugin documentation', 'rest-xmlrpc-data-checker' ) . '</a></p>' .
+			'<p><a href="https://github.com/enrico-sorcinelli/rest-xmlrpc-data-checker/issues" target="_blank">' . __( 'Report a bug', 'rest-xmlrpc-data-checker' ) . '</a></p>'
+		);
+	}
+
 }

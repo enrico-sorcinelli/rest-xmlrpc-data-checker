@@ -63,6 +63,20 @@ class Rest {
 		// Add JSONP support filter.
 		add_filter( 'rest_jsonp_enabled', array( $this, 'filter_rest_jsonp_enabled' ) );
 
+		// Remove REST API link tag.
+		if ( ! empty( $this->plugin_settings['rest']['remove_link_tag'] ) ) {
+			remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
+		}
+
+		// Remove REST API link in HTTP headers.
+		if ( ! empty( $this->plugin_settings['rest']['remove_link_http_headers'] ) ) {
+			remove_action( 'template_redirect', 'rest_output_link_header', 11, 0 );
+		}
+
+		// Remove oEmbed Discovery Links.
+		if ( ! empty( $this->plugin_settings['rest']['remove_oembed_discovery_links'] ) ) {
+			remove_action( 'wp_head', 'wp_oembed_add_discovery_links', 10 );
+		}
 	}
 
 	/**

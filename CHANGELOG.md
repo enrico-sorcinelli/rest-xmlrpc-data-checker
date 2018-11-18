@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.1] - 2018-10-18
+### Added
+ - Allows to remove REST and Discovery oEmbed `<link>` tags on front-end pages.
+ - Allows to remove REST HTTP Header `Link`.
+ - Contextual help menu in plugin admin setting screen.
+ - Remove REST/XML-RPC user's capabilities added by plugin on plugin removal.
+
+### Fixed
+ - First plugin options save.
+ - Maintains last opened tab after plugin options saving.
+ - PHPCS.
+
+### Changed
+ - Documentation improvements.
+
 ## [1.0.0] - 2018-10-10
 ### Added
  - First public release.

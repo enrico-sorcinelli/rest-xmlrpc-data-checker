@@ -380,7 +380,6 @@ class WP_Test_REST_Controller extends WP_Test_REST_Controller_Testcase {
 		$response = rest_get_server()->serve_request( sprintf( '/wp/v2/posts/%d', self::$post_id ) );
 		$result = json_decode( rest_get_server()->sent_body, true );
 		$this->assertEquals( 'rest_callback_disabled' , $result['code'] );
-
 	}
 
 	/**

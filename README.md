@@ -4,13 +4,14 @@ JSON REST API and XML-RPC API are powerful ways to remotely interact with WordPr
 
 If you don't have external applications that need to communicate with your WordPress instance using JSON REST API or XML-RPC API you should disable access to them for external requests.
 
-In the standard WordPress installation JSON REST API and XML-RPC API are enabled by default and even if you could do the stuff by writing your own code using native filters, this plugin aims to help you to control JSON REST API and XML-RCP API accesses from the administration panel.
+In the standard WordPress installation JSON REST API and XML-RPC API are enabled by default and even if you could do the stuff by writing your own code using native filters, this plugin aims to help you to control JSON REST API and XML-RPC API accesses from the administration panel.
 
 # Basic Features
 
 * **Disable REST API** interface for unlogged users.
 * **Disable JSONP support** on REST API.
 * **Add Basic Authentication** to REST API.
+* **Remove** REST `<link>` tags and `Link` HTTP header on front-end side.
 * **Setup trusted users, IP/Networks and endpoints** for unlogged users REST requests.
 * **Change REST endpoint prefix**.
 * **Disable XML-RPC API** interface.
@@ -60,7 +61,7 @@ apply_filters( 'rest_xmlrpc_data_checker_rest_error', WP_Error|boolean $result )
 
 ### `xmlrpc_before_insert_post`
 
-Filter XML-RPC post data to be inserted via XML-RPC before any action.
+Filter XML-RPC post data to be inserted via XML-RPC before to insert post into database.
 
 ```php
 apply_filters( 'xmlrpc_before_insert_post', array|IXR_Error $content_struct, WP_User $user );
@@ -82,7 +83,7 @@ The REST settings section.
 
 ### XML-RPC settings ###
 
-The XML-RCP settings section.
+The XML-RPC settings section.
 
 ![XML-RPC settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-2.png)
 

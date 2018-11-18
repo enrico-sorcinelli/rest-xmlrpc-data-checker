@@ -16,8 +16,12 @@
 			$( 'section.rest-xmlrpc-data-checker' )
 				.hide()
 				.eq( $( this ).index() ).show();
+			$( 'input[name="' + rest_xmlrpc_data_checker_i18n.prefix + 'active_tab"]' ).val( $( this ).data( 'section') );
 			return false;
 		});
+
+		// Active tab by hash.
+		$( '.nav-tab-wrapper.rest-xmlrpc-data-checker a[data-section="' + document.location.hash.replace( /^#+/, '' ) + '"]' ).trigger('click');
 
 		// Add handler on click over user row.
 		$( 'table.rest-xmlrpc-data-checker-users-list.cb tbody tr td' ).on( 'click', function(e) {
