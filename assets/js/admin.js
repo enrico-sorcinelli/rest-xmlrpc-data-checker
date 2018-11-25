@@ -16,7 +16,8 @@
 			$( 'section.rest-xmlrpc-data-checker' )
 				.hide()
 				.eq( $( this ).index() ).show();
-			$( 'input[name="' + rest_xmlrpc_data_checker_i18n.prefix + 'active_tab"]' ).val( $( this ).data( 'section') );
+			$( 'input[name="' + rest_xmlrpc_data_checker_i18n.prefix + 'active_tab"]' ).val( $( this ).data( 'section' ) );
+			document.location.hash = $( this ).data( 'section' );
 			return false;
 		});
 

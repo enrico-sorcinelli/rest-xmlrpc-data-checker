@@ -6,10 +6,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: REST XML-RPC Data Checker 1.0.1\n"
+"Project-Id-Version: REST XML-RPC Data Checker 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/plugins/rest-xmlrpc-data-"
 "checker\n"
-"POT-Creation-Date: 2018-11-18 08:37+0100\n"
+"POT-Creation-Date: 2018-11-25 08:41+0100\n"
 "PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FName LName <FName.LName>\n"
@@ -29,43 +29,43 @@ msgid "Settings"
 msgstr ""
 
 #: php/class-rest-xmlrpc-data-checker-admin.php:411
-#: php/adminpages/settings.php:140
+#: php/adminpages/settings.php:145
 msgid "None"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:494
+#: php/class-rest-xmlrpc-data-checker-admin.php:495
 msgid "Overview"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:495
+#: php/class-rest-xmlrpc-data-checker-admin.php:496
 msgid ""
 "This screen is used for managing JSON REST and XML-RPC accesses and "
 "permissions to your WordPress installation."
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:496
+#: php/class-rest-xmlrpc-data-checker-admin.php:497
 msgid ""
 "You must click the <strong>Save Changes</strong> button at the bottom of the "
 "screen for new settings to take effect."
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:503
+#: php/class-rest-xmlrpc-data-checker-admin.php:504
 #: php/adminpages/settings.php:69
 msgid "REST"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:504
+#: php/class-rest-xmlrpc-data-checker-admin.php:505
 msgid ""
 "The REST tab allows you to control JSON REST API requests to your WordPress "
 "installation."
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:505
+#: php/class-rest-xmlrpc-data-checker-admin.php:506
 #: php/adminpages/settings.php:79 php/adminpages/user-fields.php:12
 msgid "REST API"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:505
+#: php/class-rest-xmlrpc-data-checker-admin.php:506
 msgid ""
 "Allows you to completely disable JSON REST requests for unlogged users and/"
 "or disable JSONP support in the REST API (regardless of authentication and "
@@ -74,40 +74,41 @@ msgid ""
 "encouraged to disable JSON REST API for unlogged users."
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:506
+#: php/class-rest-xmlrpc-data-checker-admin.php:507
 #: php/adminpages/settings.php:99
 msgid "REST prefix"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:506
+#: php/class-rest-xmlrpc-data-checker-admin.php:507
 #: php/adminpages/settings.php:105
 msgid "Allows to change REST prefix route."
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:507
+#: php/class-rest-xmlrpc-data-checker-admin.php:508
 #: php/adminpages/settings.php:111
 msgid "REST Links"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:507
+#: php/class-rest-xmlrpc-data-checker-admin.php:508
+#, php-format
 msgid ""
-"Allows to remove REST API and oEmbed Discovery <code>&lt;link&gt;</code> "
-"tags and REST API <code>Link</code> HTTP header added by WordPress to front-"
-"end pages."
+"Allows to remove REST API and oEmbed Discovery %1$s tags, REST API %2$s HTTP "
+"header and REST API Really Simple Discovery (RSD) endpoint informations "
+"added by WordPress to front-end pages."
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:508
+#: php/class-rest-xmlrpc-data-checker-admin.php:509
 msgid ""
 "If you need to leave REST JSON enabled, disable REST API interface for "
 "unlogged users and then grant accesses by using following settings:"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:509
-#: php/adminpages/settings.php:134
+#: php/class-rest-xmlrpc-data-checker-admin.php:510
+#: php/adminpages/settings.php:139
 msgid "Authentication"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:509
+#: php/class-rest-xmlrpc-data-checker-admin.php:510
 #, php-format
 msgid ""
 "The <strong>Use Basic Authentication</strong> option enable Basic "
@@ -117,45 +118,45 @@ msgid ""
 "connections."
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:510
-#: php/class-rest-xmlrpc-data-checker-admin.php:524
-#: php/adminpages/settings.php:161 php/adminpages/settings.php:240
+#: php/class-rest-xmlrpc-data-checker-admin.php:511
+#: php/class-rest-xmlrpc-data-checker-admin.php:526
+#: php/adminpages/settings.php:166 php/adminpages/settings.php:263
 msgid "Trusted netkwors"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:510
+#: php/class-rest-xmlrpc-data-checker-admin.php:511
 msgid ""
 "Allows you to restrict JSON REST requests only if they come from selected "
 "IPs or netowrks."
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:511
-#: php/adminpages/settings.php:178
+#: php/class-rest-xmlrpc-data-checker-admin.php:512
+#: php/adminpages/settings.php:183
 msgid "Allowed routes"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:511
+#: php/class-rest-xmlrpc-data-checker-admin.php:512
 msgid ""
 "Allows you to restrict JSON REST requests only for selected REST routes."
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:519
+#: php/class-rest-xmlrpc-data-checker-admin.php:520
 #: php/adminpages/settings.php:70
 msgid "XML-RPC"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:520
+#: php/class-rest-xmlrpc-data-checker-admin.php:521
 msgid ""
 "The XML-RPC tab allows you to control XML-RPC API requests to your WordPress "
 "installation."
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:521
-#: php/adminpages/settings.php:207 php/adminpages/user-fields.php:24
+#: php/class-rest-xmlrpc-data-checker-admin.php:522
+#: php/adminpages/settings.php:212 php/adminpages/user-fields.php:24
 msgid "XML-RPC API"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:521
+#: php/class-rest-xmlrpc-data-checker-admin.php:522
 msgid ""
 "Allows you to completely disable XML-RPC requests regardless of "
 "authentication and trust settings. If you don't have external applications "
@@ -163,66 +164,78 @@ msgid ""
 "are strongly strongly encouraged to disable XML-RPC interface."
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:522
+#: php/class-rest-xmlrpc-data-checker-admin.php:523
+#: php/adminpages/settings.php:232
+msgid "XML-RPC Links"
+msgstr ""
+
+#: php/class-rest-xmlrpc-data-checker-admin.php:523
+#, php-format
+msgid ""
+"Allows to remove %1$s tag for Really Simple Discovery (RSD) service endpoint "
+"informations and %2$s HTTP header added by WordPress to front-end pages."
+msgstr ""
+
+#: php/class-rest-xmlrpc-data-checker-admin.php:524
 msgid ""
 "If you need to leave XML-RPC enabled, first of all be sure to use SSL-"
 "secured connections. Then you can restrict accesses by using following "
 "settings:"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:523
-#: php/adminpages/settings.php:226
+#: php/class-rest-xmlrpc-data-checker-admin.php:525
+#: php/adminpages/settings.php:249
 msgid "Trusted users"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:523
+#: php/class-rest-xmlrpc-data-checker-admin.php:525
 msgid "Allows you to restrict XML-RPC API access only to selected users."
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:524
+#: php/class-rest-xmlrpc-data-checker-admin.php:526
 msgid ""
 "Allows you to restrict XML-RPC API requests only if they come from selected "
 "IPs or netowrks."
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:525
-#: php/adminpages/settings.php:255
+#: php/class-rest-xmlrpc-data-checker-admin.php:527
+#: php/adminpages/settings.php:278
 msgid "Allowed methods"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:525
+#: php/class-rest-xmlrpc-data-checker-admin.php:527
 msgid "Allows you to restrict XML-RPC API requests only for selected methods"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:533
+#: php/class-rest-xmlrpc-data-checker-admin.php:535
 #: php/adminpages/settings.php:71
 msgid "Options"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:534
+#: php/class-rest-xmlrpc-data-checker-admin.php:536
 msgid "The Options tab allows you to perform following actions:"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:535
-#: php/adminpages/settings.php:282
+#: php/class-rest-xmlrpc-data-checker-admin.php:537
+#: php/adminpages/settings.php:305
 msgid "Plugin settings"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:535
+#: php/class-rest-xmlrpc-data-checker-admin.php:537
 msgid ""
 "Allows you to completely remove options on plugin removal including "
 "additional REST/XML-RPC user's capabilities added by plugin."
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:543
+#: php/class-rest-xmlrpc-data-checker-admin.php:545
 msgid "For more information:"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:544
+#: php/class-rest-xmlrpc-data-checker-admin.php:546
 msgid "Plugin documentation"
 msgstr ""
 
-#: php/class-rest-xmlrpc-data-checker-admin.php:545
+#: php/class-rest-xmlrpc-data-checker-admin.php:547
 msgid "Report a bug"
 msgstr ""
 
@@ -251,119 +264,134 @@ msgid "Remove REST API %s HTTP header"
 msgstr ""
 
 #: php/adminpages/settings.php:127
+msgid "Remove REST API Really Simple Discovery (RSD) endpoint informations"
+msgstr ""
+
+#: php/adminpages/settings.php:132
 #, php-format
 msgid "Remove oEmbed discovery %s tags"
 msgstr ""
 
-#: php/adminpages/settings.php:145
+#: php/adminpages/settings.php:150
 msgid "Use Basic Authentication"
 msgstr ""
 
-#: php/adminpages/settings.php:147
+#: php/adminpages/settings.php:152
 #, php-format
 msgid ""
 "This allows you to restrict REST requests only for selected users. They have "
 "to supply username/password in the %s HTTP header."
 msgstr ""
 
-#: php/adminpages/settings.php:149 php/adminpages/settings.php:216
+#: php/adminpages/settings.php:154 php/adminpages/settings.php:221
 msgid ""
 "Your WordPress installation don't appear to run under a secure connection."
 msgstr ""
 
-#: php/adminpages/settings.php:151
+#: php/adminpages/settings.php:156
 msgid ""
-"This plugin requires sending your username and password with every request, "
-"and should only be used over SSL-secured connections or for local "
-"development and testing."
+"The Basic Authentication requires sending your username and password with "
+"every request, and should only be used over SSL-secured connections or for "
+"local development and testing."
 msgstr ""
 
-#: php/adminpages/settings.php:153
+#: php/adminpages/settings.php:158
 msgid ""
 "Without SSL you are strongly encouraged to to turn off authentication in "
 "production environments."
 msgstr ""
 
-#: php/adminpages/settings.php:165 php/adminpages/settings.php:244
+#: php/adminpages/settings.php:170 php/adminpages/settings.php:267
 msgid "Apply trusted networks criteria"
 msgstr ""
 
-#: php/adminpages/settings.php:168 php/adminpages/settings.php:247
+#: php/adminpages/settings.php:173 php/adminpages/settings.php:270
 msgid ""
 "With this option active, only requests coming form a specific IPs or "
 "newtorks are allowed."
 msgstr ""
 
-#: php/adminpages/settings.php:169 php/adminpages/settings.php:186
+#: php/adminpages/settings.php:174 php/adminpages/settings.php:191
 msgid ""
 "This will applied only if REST API interface has been disabled for unlogged "
 "users."
 msgstr ""
 
-#: php/adminpages/settings.php:171 php/adminpages/settings.php:248
+#: php/adminpages/settings.php:176 php/adminpages/settings.php:271
 msgid "Add one trusted IP or network per line"
 msgstr ""
 
-#: php/adminpages/settings.php:174
-msgid "For example: 10.10.0.1/32 , 10.10.10/25 ."
+#: php/adminpages/settings.php:179
+msgid "For example: 10.10.0.1/32 , 10.10.10.0/25 ."
 msgstr ""
 
-#: php/adminpages/settings.php:182
+#: php/adminpages/settings.php:187
 msgid "Apply allowed routes criteria"
 msgstr ""
 
-#: php/adminpages/settings.php:185
+#: php/adminpages/settings.php:190
 msgid "With this option active, you can selectively allow REST routes."
 msgstr ""
 
-#: php/adminpages/settings.php:212
+#: php/adminpages/settings.php:217
 msgid "Disable XML-RPC API interface"
 msgstr ""
 
-#: php/adminpages/settings.php:214
+#: php/adminpages/settings.php:219
 msgid ""
 "This will deny all XML-RPC requests regardless of authentication and trust "
 "checks below."
 msgstr ""
 
-#: php/adminpages/settings.php:218
+#: php/adminpages/settings.php:223
 msgid ""
 "The XML-RPC interface requires sending your username and password with every "
 "request, and should only be used over SSL-secured connections or for local "
 "development and testing."
 msgstr ""
 
-#: php/adminpages/settings.php:220
+#: php/adminpages/settings.php:225
 msgid ""
 "Without SSL you are strongly encouraged to disable XML-RPC interface in "
 "production environments."
 msgstr ""
 
-#: php/adminpages/settings.php:230
+#: php/adminpages/settings.php:238
+#, php-format
+msgid ""
+"Remove %s to the Really Simple Discovery (RSD) service endpoint informations"
+msgstr ""
+
+#: php/adminpages/settings.php:243
+#, php-format
+msgid "Remove %s HTTP header"
+msgstr ""
+
+#: php/adminpages/settings.php:253
 msgid "Apply trusted users criteria"
 msgstr ""
 
-#: php/adminpages/settings.php:233
+#: php/adminpages/settings.php:256
 msgid "With this option active, only selected users can access to XML-RPC API."
 msgstr ""
 
-#: php/adminpages/settings.php:234
+#: php/adminpages/settings.php:257
 msgid "Select users for which enable XML-RPC"
 msgstr ""
 
-#: php/adminpages/settings.php:251
-msgid "For example: 10.10.0.1/32 or 10.10.10/25 ."
+#: php/adminpages/settings.php:274
+msgid "For example: 10.10.0.1/32 or 10.10.10.0/25 ."
 msgstr ""
 
-#: php/adminpages/settings.php:259
+#: php/adminpages/settings.php:282
 msgid "Apply trusted methods criteria"
 msgstr ""
 
-#: php/adminpages/settings.php:262
+#: php/adminpages/settings.php:285
 msgid "With this option active, you can selectively allow XML-RPC methods."
 msgstr ""
 
-#: php/adminpages/settings.php:286
+#: php/adminpages/settings.php:309
 msgid "Completely remove options on plugin removal."
 msgstr ""
 

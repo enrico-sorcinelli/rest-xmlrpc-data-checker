@@ -11,10 +11,12 @@ In the standard WordPress installation JSON REST API and XML-RPC API are enabled
 * **Disable REST API** interface for unlogged users.
 * **Disable JSONP support** on REST API.
 * **Add Basic Authentication** to REST API.
-* **Remove** REST `<link>` tags and `Link` HTTP header on front-end side.
+* **Remove** REST `<link>` tags, REST `Link` HTTP header and REST Really Simple Discovery (RSD) informations.
 * **Setup trusted users, IP/Networks and endpoints** for unlogged users REST requests.
 * **Change REST endpoint prefix**.
 * **Disable XML-RPC API** interface.
+* **Remove** <link> to the Really Simple Discovery (RDS) informations.
+* **Remove** `X-Pingback` HTTP header.
 * **Setup trusted users, IP/Networks and methods** for XML-RPC requests.
 
 # Installation
@@ -72,6 +74,30 @@ apply_filters( 'xmlrpc_before_insert_post', array|IXR_Error $content_struct, WP_
 ## Does it work with Gutenberg?
 
 Yes.
+
+## How do I make REST requests using Basic Authentication?
+
+In the _REST_ tab of plugin settings page you have to:
+
+* check **Disable REST API interface for unlogged users** option
+* select **Use Basic Authentication** in the _Authentication_ section
+* select users whom you want to grant REST access
+* save changes
+
+This way, in HTTP REST requests users have to add `Authorization` HTTP header.
+
+In order to generate the `Authorization` HTTP header to use with Basic Authentication you simply have to base64 encode the username and password separated by a colon.
+
+Here is an example in PHP:
+
+```php
+$header = 'Authorization: Basic ' . base64_encode( 'my-user:my-password' );
+```
+
+[Here you can see several examples](https://gist.github.com/enrico-sorcinelli/d33b6889888e95f710bc50a2090a25cf) in a variety of language.
+
+Note that the Basic Authentication requires sending your username and password with every request, and should only be used over SSL-secured connections or for local development and testing.	
+Without SSL you are strongly encouraged to to turn off Basic Authentication in production environments.
 
 # Screenshots 
 

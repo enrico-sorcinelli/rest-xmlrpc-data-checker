@@ -64,6 +64,10 @@ class XMLRPC {
 
 		// Check for unallowed methods.
 		add_filter( 'xmlrpc_methods', array( $this, 'check_xmlrpc_methods' ), 99 );
+
+		if ( $this->plugin_settings['rest']['remove_xmlrpc_rsd_apis'] ) {
+			remove_action( 'xmlrpc_rsd_apis', 'rest_output_rsd' );
+		}
 	}
 
 	/**

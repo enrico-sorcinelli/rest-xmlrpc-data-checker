@@ -119,7 +119,12 @@ function cb_list( $args = array() ) {
 						<br>
 						<label>
 							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][remove_link_http_headers]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_remove_link_http_headers' ); ?>" value="1" <?php checked( 1, $params['settings']['rest']['remove_link_http_headers'] ); ?>">
-							<?php /* translators: %s tag */ echo sprintf( __( 'Remove REST API %s HTTP header', 'rest-xmlrpc-data-checker' ), '<code>Link</code>' ); ?>
+							<?php /* translators: %s HTTP header */ echo sprintf( __( 'Remove REST API %s HTTP header', 'rest-xmlrpc-data-checker' ), '<code>Link</code>' ); ?>
+						</label>
+						<br>
+						<label>
+							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][remove_xmlrpc_rsd_apis]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_remove_xmlrpc_rsd_apis' ); ?>" value="1" <?php checked( 1, $params['settings']['rest']['remove_xmlrpc_rsd_apis'] ); ?>">
+							<?php esc_html_e( 'Remove REST API Really Simple Discovery (RSD) endpoint informations', 'rest-xmlrpc-data-checker' ); ?>
 						</label>
 						<br>
 						<label>
@@ -148,7 +153,7 @@ function cb_list( $args = array() ) {
 						<div class="update-nag rest_basic_auth_alert">
 							<b><?php esc_html_e( 'Your WordPress installation don\'t appear to run under a secure connection.', 'rest-xmlrpc-data-checker' ); ?></b>
 							<br>
-							<?php esc_html_e( 'This plugin requires sending your username and password with every request, and should only be used over SSL-secured connections or for local development and testing.', 'rest-xmlrpc-data-checker' ); ?>
+							<?php esc_html_e( 'The Basic Authentication requires sending your username and password with every request, and should only be used over SSL-secured connections or for local development and testing.', 'rest-xmlrpc-data-checker' ); ?>
 							<br>
 							<?php esc_html_e( 'Without SSL you are strongly encouraged to to turn off authentication in production environments.', 'rest-xmlrpc-data-checker' ); ?>
 						</div>
@@ -171,7 +176,7 @@ function cb_list( $args = array() ) {
 						<?php esc_html_e( 'Add one trusted IP or network per line', 'rest-xmlrpc-data-checker' ); ?>
 					</p>
 					<textarea name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][trusted_networks]' ); ?>" rows="5" cols="50" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_trusted_networks' ); ?>" class="large-text code"><?php echo esc_html( $params['settings']['rest']['trusted_networks'] ); ?></textarea>
-					<p class="description"><?php esc_html_e( 'For example: 10.10.0.1/32 , 10.10.10/25 .', 'rest-xmlrpc-data-checker' ); ?></p>
+					<p class="description"><?php esc_html_e( 'For example: 10.10.0.1/32 , 10.10.10.0/25 .', 'rest-xmlrpc-data-checker' ); ?></p>
 				</td>
 			</tr>
 			<tr>
@@ -223,6 +228,24 @@ function cb_list( $args = array() ) {
 				</td>
 			</tr>
 			<tr>
+				<th scope="row">
+					<?php esc_html_e( 'XML-RPC Links', 'rest-xmlrpc-data-checker' ); ?>
+				</th>
+				<td>
+					<fieldset>
+						<label>
+							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[xmlrpc][remove_rsd_link]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_xmlrpc_remove_rsd_link' ); ?>" value="1" <?php checked( 1, $params['settings']['xmlrpc']['remove_rsd_link'] ); ?>">
+							<?php /* translators: %s tag */ echo sprintf( __( 'Remove %s to the Really Simple Discovery (RSD) service endpoint informations', 'rest-xmlrpc-data-checker' ), '<code>&lt;link&gt;</code>' ); ?>
+						</label>
+						<br>
+						<label>
+							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[xmlrpc][remove_pingback_http_header]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_xmlrpc_remove_pingback_http_header' ); ?>" value="1" <?php checked( 1, $params['settings']['xmlrpc']['remove_pingback_http_header'] ); ?>">
+							<?php /* translators: %s HTTP header */ echo sprintf( __( 'Remove %s HTTP header', 'rest-xmlrpc-data-checker' ), '<code>X-Pingback</code>' ); ?>
+						</label>
+					</fieldset>
+				</td>
+			</tr>
+			<tr>
 				<th scope="row"><?php esc_html_e( 'Trusted users', 'rest-xmlrpc-data-checker' ); ?></th>
 				<td>
 					<label>
@@ -248,7 +271,7 @@ function cb_list( $args = array() ) {
 						<?php esc_html_e( 'Add one trusted IP or network per line', 'rest-xmlrpc-data-checker' ); ?>
 					</p>
 					<textarea name="<?php echo esc_attr( $params['prefix'] . 'settings[xmlrpc][trusted_networks]' ); ?>" rows="5" cols="50" id="<?php echo esc_attr( $params['prefix'] . 'settings_xmlrpc_trusted_networks' ); ?>" class="large-text code"><?php echo esc_html( $params['settings']['xmlrpc']['trusted_networks'] ); ?></textarea>
-					<p class="description"><?php esc_html_e( 'For example: 10.10.0.1/32 or 10.10.10/25 .', 'rest-xmlrpc-data-checker' ); ?></p>
+					<p class="description"><?php esc_html_e( 'For example: 10.10.0.1/32 or 10.10.10.0/25 .', 'rest-xmlrpc-data-checker' ); ?></p>
 				</td>
 			</tr>
 			<tr>

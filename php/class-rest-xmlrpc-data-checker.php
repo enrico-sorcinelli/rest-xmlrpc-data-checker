@@ -128,6 +128,20 @@ class REST_XMLRPC_Data_Checker {
 				'plugin_settings' => $this->plugin_settings,
 			)
 		);
+
+		if ( $this->plugin_settings['xmlrpc']['remove_rsd_link'] ) {
+			remove_action( 'wp_head', 'rsd_link' );
+		}
+
+		// Disable pings if XML-RPC if disabled.
+		if ( $this->plugin_settings['xmlrpc']['disable'] ) {
+			add_filter( 'pings_open', '__return_false' );
+		}
+
+		// Remove 'X-Pingback' HTTP Header.
+		if ( $this->plugin_settings['xmlrpc']['disable'] || $this->plugin_settings['xmlrpc']['remove_pingback_http_header'] ) {
+			add_action( 'wp', array( $this, 'filter_wp' ), 10 );
+		};
 	}
 
 	/**
@@ -145,6 +159,15 @@ class REST_XMLRPC_Data_Checker {
 	}
 
 	/**
+	 * `wp` action hook. Remove X-Pingback HTTP header.
+	 *
+	 * @param \WP $wp Current WordPress environment instance.
+	 */
+	public function filter_wp( $wp ) {
+		@header_remove( 'X-Pingback' );
+	}
+
+	/**
 	 * Get plugin options settings.
 	 *
 	 * @return array
@@ -158,6 +181,7 @@ class REST_XMLRPC_Data_Checker {
 					'url_prefix'                    => rest_get_url_prefix(),
 					'remove_link_tag'               => false,
 					'remove_oembed_discovery_links' => false,
+					'remove_xmlrpc_rsd_apis'        => false,
 					'remove_link_http_headers'      => false,
 					'disable'                       => false,
 					'disable_jsonp'                 => false,
@@ -169,13 +193,15 @@ class REST_XMLRPC_Data_Checker {
 					'allowed_routes'                => array(),
 				),
 				'xmlrpc'  => array(
-					'disable'                => false,
-					'apply_trusted_users'    => false,
-					'trusted_users'          => array(),
-					'apply_trusted_networks' => false,
-					'trusted_networks'       => '',
-					'apply_allowed_methods'  => false,
-					'allowed_methods'        => array(),
+					'disable'                     => false,
+					'remove_rsd_link'             => false,
+					'remove_pingback_http_header' => false,
+					'apply_trusted_users'         => false,
+					'trusted_users'               => array(),
+					'apply_trusted_networks'      => false,
+					'trusted_networks'            => '',
+					'apply_allowed_methods'       => false,
+					'allowed_methods'             => array(),
 				),
 				'options' => array(
 					'remove_plugin_settings' => false,
