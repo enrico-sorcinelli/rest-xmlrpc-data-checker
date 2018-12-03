@@ -18,6 +18,7 @@ In the standard WordPress installation JSON REST API and XML-RPC API are enabled
 * **Remove** <link> to the Really Simple Discovery (RDS) informations.
 * **Remove** `X-Pingback` HTTP header.
 * **Setup trusted users, IP/Networks and methods** for XML-RPC requests.
+* **Show user's access informations** in users list administration screen.
 
 # Installation
 
@@ -101,25 +102,31 @@ Without SSL you are strongly encouraged to to turn off Basic Authentication in p
 
 # Screenshots 
 
-### REST settings ###
+## REST settings
 
 The REST settings section.
 
 ![REST settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-1.png)
 
-### XML-RPC settings ###
+## XML-RPC settings
 
 The XML-RPC settings section.
 
 ![XML-RPC settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-2.png)
 
-### User profile ###
+## User profile
 
 Enable XML-RPC and REST interfaces on user profile/user edit pages (available only for users with `edit_users` capability).
 
 ![Plugin settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-3.png)
 
-# License: GPLv2 #
+## User list administration screen
+
+![Plugin settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-4.png)
+
+Column with REST and XML-RPC API access informations on users list administration screen.
+
+# License: GPLv2
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

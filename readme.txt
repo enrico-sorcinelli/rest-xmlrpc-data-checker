@@ -3,8 +3,8 @@ Contributors: enrico.sorcinelli
 Tags: json, rest, xmlrpc, api, security, admin, theme
 Requires at least: 4.4
 Requires PHP: 5.2.4
-Tested up to: 4.9.8
-Stable tag: 1.1.0
+Tested up to: 5.0.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 
 REST XML-RPC Data Checker allow to check JSON REST and XML-RPC API requests and grant access permissions.
@@ -29,6 +29,7 @@ In the standard WordPress installation JSON REST API and XML-RPC API are enabled
 * **Remove** <link> to the Really Simple Discovery (RDS) informations.
 * **Remove** `X-Pingback` HTTP header.
 * **Setup trusted users, IP/Networks and methods** for XML-RPC requests.
+* **Show user's access informations** in users list administration screen.
 
 == Installation ==
 
@@ -105,6 +106,7 @@ Without SSL you are strongly encouraged to to turn off Basic Authentication in p
 1. The JSON REST settings section.
 2. The XML-RPC settings section.
 3. Enable XML-RPC and REST interfaces on user profile/user edit pages (available only for users with `edit_users` capability).
+4. User list administration screen.
 
 == Changelog ==
 

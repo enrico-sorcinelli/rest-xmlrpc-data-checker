@@ -117,3 +117,41 @@ div.rest-xmlrpc-data-checker-cb-list input[type="checkbox"]:indeterminate:before
 	margin-top: 7px;
 	display: inline-block;
 }
+
+/* Users list */
+th.column-rest-xmlrpc-data-checker-status {
+	text-align: center;
+}
+
+.rest-xmlrpc-data-checker-ok {
+	color: green;
+}
+
+.rest-xmlrpc-data-checker-ko {
+	color: #dd0000;
+}
+
+td.column-rest-xmlrpc-data-checker-status div.table {
+	margin: auto;
+	display: table;
+}
+
+td.column-rest-xmlrpc-data-checker-status div.row {
+	display: table-row;
+}
+
+td.column-rest-xmlrpc-data-checker-status div.cell {
+	display: table-cell;
+	padding-right: 10px;
+}
+
+@media screen and ( max-width: 782px ) {
+	th.column-rest-xmlrpc-data-checker-status,
+	td.column-rest-xmlrpc-data-checker-status {
+		text-align: inherit;
+	}
+
+	td.column-rest-xmlrpc-data-checker-status div.table {
+		margin: inherit;
+	}
+}

@@ -126,8 +126,10 @@ class Admin {
 				add_action( 'admin_print_scripts-' . $page, array( $this, 'load_javascript' ), 10, 0 );
 
 				// Adds help_tab when settings page loads.
-				add_action( 'load-' . $page, array( $this, 'add_help_tab' ), 100 );
+				add_action( 'load-' . $page, array( $this, 'add_settings_help_tab' ), 100 );
 			}
+
+			add_action( 'admin_print_styles-users.php', array( $this, 'load_css' ), 10, 0 );
 		}
 
 		// General settings.
@@ -151,6 +153,15 @@ class Admin {
 		add_action( 'add_option_' . $this->prefix . 'settings', array( $this, 'update_caps' ), 10, 2 );
 
 		add_filter( 'wp_redirect', array( $this, 'set_active_tab_wp_redirect' ), 10, 2 );
+
+		// Add column on users list.
+		if ( $this->plugin_settings['options']['show_user_status_column'] ) {
+			add_action( 'manage_users_columns', array( $this, 'manage_users_columns' ), 10, 1 );
+			add_action( 'manage_users_custom_column', array( $this, 'manage_users_custom_column' ), 10, 3 );
+
+			// Push help tab on users list page.
+			add_action( 'admin_head-users.php', array( $this, 'add_users_help_tab' ), 1000 );
+		}
 	}
 
 	/**
@@ -480,14 +491,10 @@ class Admin {
 	/**
 	 * Add help admin settings screen.
 	 */
-	public function add_help_tab() {
-
-		global $pagenow;
+	public function add_settings_help_tab() {
 
 		// Get screen.
 		$screen = get_current_screen();
-
-		$add_sidebar = false;
 
 		$screen->add_help_tab(
 			array(
@@ -536,8 +543,6 @@ class Admin {
 				'content' => '<p>' . __( 'The Options tab allows you to perform following actions:', 'rest-xmlrpc-data-checker' ) . '</p><ul>' .
 					'<li><strong>' . __( 'Plugin settings', 'rest-xmlrpc-data-checker' ) . '</strong> &mdash; ' . __( 'Allows you to completely remove options on plugin removal including additional REST/XML-RPC user\'s capabilities added by plugin.', 'rest-xmlrpc-data-checker' ) . '</li>' .
 					'</ul>',
-				false,
-				1000,
 			)
 		);
 
@@ -548,4 +553,75 @@ class Admin {
 		);
 	}
 
+	/**
+	 * Add help tab on admin users screen.
+	 */
+	public function add_users_help_tab() {
+
+		// Get screen.
+		$screen = get_current_screen();
+
+		$screen->add_help_tab(
+			array(
+				'id'      => 'data-checker',
+				'title'   => __( 'REST XML-RPC Data Checker', 'rest-xmlrpc-data-checker' ),
+				'content' => '<p>' . __( 'The <strong>Data Checker</strong> column shows user\'s current JSON REST and XML-RPC access permissions to your WordPress installation.', 'rest-xmlrpc-data-checker' ) . '</p>'
+					. '<ul><li><span title="' . __( 'Enabled', 'rest-xmlrpc-data-checker' ) . '" class="dashicons dashicons-unlock rest-xmlrpc-data-checker-ok"></span> ' . __( 'User is allowed to access without providing username and password.', 'rest-xmlrpc-data-checker' ) . '</li>'
+					. '<li><span title="' . __( 'Disabled', 'rest-xmlrpc-data-checker' ) . '" class="dashicons dashicons-lock rest-xmlrpc-data-checker-ko"></span> ' . __( 'User is allowed to access only by providing username and password.', 'rest-xmlrpc-data-checker' ) . '</li>'
+					. '<li><span title="' . __( 'Disabled', 'rest-xmlrpc-data-checker' ) . '" class="dashicons dashicons-no rest-xmlrpc-data-checker-ko"></span> ' . __( 'User is unallowed to access.', 'rest-xmlrpc-data-checker' ) . '</li></ul>'
+					. '<p>' . __( 'Note that access may be restricted by further checks- based on the plugin configuration.', 'rest-xmlrpc-data-checker' ) . '</p>',
+			)
+		);
+	}
+
+	/**
+	 * Add label to the users list table header.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param array $columns Table columns.
+	 *
+	 * @return array
+	 */
+	public function manage_users_columns( $columns = array() ) {
+
+		$columns = \Plugin_Utils::array_insert_before(
+			array(
+				'key'       => 'posts',
+				'array'     => $columns,
+				'new_array' => array( 'rest-xmlrpc-data-checker-status' => __( 'Data Checker', 'rest-xmlrpc-data-checker' ) ),
+			)
+		);
+
+		return $columns;
+	}
+
+	/**
+	 * Add REST/XML-RPC status into column.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param  string  $value       String.
+	 * @param  string  $column_name Column name.
+	 * @param  integer $user_id     User ID.
+	 *
+	 * @return string
+	 */
+	public function manage_users_custom_column( $value = '', $column_name = '', $user_id = 0 ) {
+
+		// Only for this column name.
+		if ( 'rest-xmlrpc-data-checker-status' === $column_name ) {
+
+			$value = \REST_XMLRPC_Data_Checker\Utils::sinclude_template(
+				REST_XMLRPC_DATA_CHECKER_BASEDIR . '/php/adminpages/users-list-status-column.php',
+				array(
+					'prefix'   => $this->prefix,
+					'user_id'  => $user_id,
+					'settings' => $this->plugin_settings,
+				)
+			);
+		}
+
+		return $value;
+	}
 }

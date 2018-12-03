@@ -204,7 +204,8 @@ class REST_XMLRPC_Data_Checker {
 					'allowed_methods'             => array(),
 				),
 				'options' => array(
-					'remove_plugin_settings' => false,
+					'show_user_status_column' => true,
+					'remove_plugin_settings'  => false,
 				),
 			)
 		);

@@ -89,7 +89,7 @@ function cb_list( $args = array() ) {
 							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][disable_jsonp]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_disable_jsonp' ); ?>" value="1" <?php checked( 1, $params['settings']['rest']['disable_jsonp'] ); ?>">
 							<?php esc_html_e( 'Disable JSONP support in REST API interface', 'rest-xmlrpc-data-checker' ); ?>
 						</label>
-						<p class="description rest-xmlrpc-data-checker-indent"><?php esc_html_e( 'Note this will deny all JSONP requests regardless of authentication and trust checks below.', 'rest-xmlrpc-data-checker' ); ?></p>
+						<p class="description rest-xmlrpc-data-checker-indent"><?php esc_html_e( 'Note that this will deny all JSONP requests regardless of authentication and trust checks below.', 'rest-xmlrpc-data-checker' ); ?></p>
 					</fieldset>
 				</td>
 			</tr>
@@ -149,7 +149,10 @@ function cb_list( $args = array() ) {
 							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][auth_method]' ); ?>" type="radio" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_auth_method_basic_auth' ); ?>" value="basic_auth" <?php checked( 'basic_auth', $params['settings']['rest']['auth_method'] ); ?>">
 							<?php esc_html_e( 'Use Basic Authentication', 'rest-xmlrpc-data-checker' ); ?>
 						</label>
-						<p class="description rest-xmlrpc-data-checker-indent"><?php /* translators: %s tag */ echo sprintf( __( 'This allows you to restrict REST requests only for selected users. They have to supply username/password in the %s HTTP header.', 'rest-xmlrpc-data-checker' ), '<code>Authorization</code>' ); ?></p>
+						<p class="description rest-xmlrpc-data-checker-indent">
+							<?php /* translators: %s tag */ echo sprintf( __( 'This allows you to restrict REST requests only for selected users. They have to supply username/password in the %s HTTP header.', 'rest-xmlrpc-data-checker' ), '<code>Authorization</code>' ); ?>
+							<?php esc_html_e( 'This will applied only if REST API interface has been disabled for unlogged users.', 'rest-xmlrpc-data-checker' ); ?>
+						</p>
 						<div class="update-nag rest_basic_auth_alert">
 							<b><?php esc_html_e( 'Your WordPress installation don\'t appear to run under a secure connection.', 'rest-xmlrpc-data-checker' ); ?></b>
 							<br>
@@ -301,6 +304,15 @@ function cb_list( $args = array() ) {
 	<!-- Options section -->
 	<section class="rest-xmlrpc-data-checker">
 		<table class="form-table">
+			<tr>
+				<th scope="row"><?php esc_html_e( 'User\'s  grants', 'rest-xmlrpc-data-checker' ); ?></th>
+				<td>
+					<input name="<?php echo esc_attr( $params['prefix'] . 'settings[options][show_user_status_column]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_options_show_user_status_column' ); ?>" value="1" <?php checked( 1, empty( $params['settings']['options']['show_user_status_column'] ) ? 0 : 1, true ); ?>>
+					<label for="<?php echo esc_attr( $params['prefix'] . 'settings_options_show_user_status_column' ); ?>">
+						<?php esc_html_e( ' Add column with REST and XML-RPC API access informations on users list administration screen.', 'rest-xmlrpc-data-checker' ); ?>
+					</label>
+				</td>
+			<tr>
 			<tr>
 				<th scope="row"><?php esc_html_e( 'Plugin settings', 'rest-xmlrpc-data-checker' ); ?></th>
 				<td>
