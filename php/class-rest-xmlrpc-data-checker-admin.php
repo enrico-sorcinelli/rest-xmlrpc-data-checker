@@ -585,7 +585,7 @@ class Admin {
 	 */
 	public function manage_users_columns( $columns = array() ) {
 
-		$columns = \Plugin_Utils::array_insert_before(
+		$columns = \REST_XMLRPC_Data_Checker\Utils::array_insert_before(
 			array(
 				'key'       => 'posts',
 				'array'     => $columns,
