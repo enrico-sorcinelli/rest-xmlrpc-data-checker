@@ -50,8 +50,12 @@ class XMLRPC {
 			$this->$property = $args[ $property ];
 		}
 
-		include_once ABSPATH . WPINC . '/class-IXR.php';
-		include_once ABSPATH . WPINC . '/class-wp-xmlrpc-server.php';
+		if ( ! class_exists( 'IXR_Client' ) ) {
+			include_once ABSPATH . WPINC . '/class-IXR.php';
+		}
+		if ( ! class_exists( 'wp_xmlrpc_server' ) ) {
+			include_once ABSPATH . WPINC . '/class-wp-xmlrpc-server.php';
+		}
 		require_once REST_XMLRPC_DATA_CHECKER_BASEDIR . '/php/class-rest-xmlrpc-data-checker-wp-xmlrpc-server.php';
 
 		add_filter( 'wp_xmlrpc_server_class', array( $this, 'wp_xmlrpc_server_class_name' ), 10, 1 );

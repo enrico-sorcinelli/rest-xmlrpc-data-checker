@@ -187,6 +187,12 @@ class Admin {
 	 * @return array
 	 */
 	public function check_plugin_settings( $settings ) {
+
+		// Checking for unset checkboxes.
+		if ( ! isset( $settings['options']['show_user_status_column'] ) ) {
+			$settings['options']['show_user_status_column'] = 0;
+        }
+
 		return $settings;
 	}
 
