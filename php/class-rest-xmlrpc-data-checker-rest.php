@@ -142,7 +142,7 @@ class Rest {
 			$trusted_networks = preg_split( '/(\s|,|;)+/', $this->plugin_settings['rest']['trusted_networks'] );
 
 			// Remote IP unallowed.
-			if ( false === \REST_XMLRPC_Data_Checker\Utils::check_network( \REST_XMLRPC_Data_Checker\Utils::get_remote_ip(), $trusted_networks ) ) {
+			if ( false === \REST_XMLRPC_Data_Checker\Utils::check_network( \REST_XMLRPC_Data_Checker\Utils::get_remote_ip( $this->plugin_settings['options']['check_forwarded_remote_ip'] ), $trusted_networks ) ) {
 				$result_check = false;
 				$error        = array(
 					'code'    => 'rest_not_allowed',
