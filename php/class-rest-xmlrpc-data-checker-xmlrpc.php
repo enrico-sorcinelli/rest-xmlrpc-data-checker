@@ -143,7 +143,7 @@ class XMLRPC {
 		// Apply check access list on setting basis.
 		if ( $this->plugin_settings['xmlrpc']['apply_trusted_networks'] && ! empty( $this->plugin_settings['xmlrpc']['trusted_networks'] ) ) {
 			$trusted_networks = preg_split( '/(\s|,|;)+/', $this->plugin_settings['xmlrpc']['trusted_networks'] );
-			if ( ! \REST_XMLRPC_Data_Checker\Utils::check_network( \REST_XMLRPC_Data_Checker\Utils::get_remote_ip(), $trusted_networks ) ) {
+			if ( ! \REST_XMLRPC_Data_Checker\Utils::check_network( \REST_XMLRPC_Data_Checker\Utils::get_remote_ip( $this->plugin_settings['options']['check_forwarded_remote_ip'] ), $trusted_networks ) ) {
 				return false;
 			}
 		}
