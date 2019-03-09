@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0] - 2019-03-09
+### Added
+ - New option allowing to disable evaluation of originating IP in HTTP headers added by proxy or load balancer for trusted network check.
+
+### Changed
+ - Updated translations and screenshots.
+ - Documentation improvements.
+
 ## [1.2.2] - 2018-12-12
 ### Fixed
  - _User's grants_ setting saving.
