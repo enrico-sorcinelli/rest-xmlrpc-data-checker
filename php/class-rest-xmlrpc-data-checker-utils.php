@@ -177,18 +177,34 @@ class Utils {
 	 *
 	 * @return string
 	 */
-	public static function get_remote_ip() {
 
-		// Check IP from share internet.
-		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) { // WPCS: XSS ok, sanitization ok.
-			$ip = $_SERVER['HTTP_CLIENT_IP']; // WPCS: XSS ok, sanitization ok.
+	/**
+	 * Get remote client IP.
+	 *
+	 * @param bool $proxy Try to get remote IP from known headers added by HTTP
+	 *                    proxy and load balancer. Default to `false`.
+	 *
+	 * @return string
+	 */
+	public static function get_remote_ip( $proxy = false ) {
+		if ( $proxy ) {
+
+			foreach ( array( 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR' ) as $key ) {
+				if ( ! empty( $_SERVER[ $key ] ) ) { // WPCS: XSS ok, sanitization ok.
+
+					// Get the right-most IP address that connects to the last proxy or load balancer.
+					$proxied_ip = preg_split( '/,\s*/', $_SERVER[ $key ] ); // WPCS: XSS ok, sanitization ok.
+					$ip         = end( $proxied_ip );
+					break;
+				}
+			}
 		}
-		// Check IP passed from proxy.
-		elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) { // WPCS: XSS ok, sanitization ok.
-			$ip = $_SERVER['HTTP_X_FORWARDED_FOR']; // WPCS: XSS ok, sanitization ok.
-		} else {
+
+		// Get remote IP.
+		if ( empty( $ip ) ) {
 			$ip = $_SERVER['REMOTE_ADDR']; // WPCS: XSS ok, sanitization ok, input var ok.
 		}
+
 		return $ip;
 	}
 
