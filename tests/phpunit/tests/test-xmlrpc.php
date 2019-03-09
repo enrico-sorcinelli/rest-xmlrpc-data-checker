@@ -194,6 +194,34 @@ class Tests_XMLRPC extends WP_XMLRPC_UnitTestCase {
 		$this->assertStringMatchesFormat( '%d', $result['post_author'] );
 	}
 
+	public function test_untrusted_network_proxied() {
+
+		// Refresh plugin settings.
+		$this->refresh_plugin_settings(
+			array(
+				'xmlrpc' => array(
+					'disable'                => false,
+					'apply_trusted_networks' => true,
+					'apply_trusted_users'    => false,
+					'trusted_networks'       => '127.0.0.1/32',
+					'apply_allowed_methods'  => false,
+				),
+				'options' => array(
+					'check_forwarded_remote_ip' => true,	
+				),
+			)
+		);
+
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = '102.102.102.102, 10.0.0.10';
+		$result = $this->myxmlrpcserver->wp_getPost( array( 1, 'author', 'author', $this->post_id ) );
+
+		\REST_XMLRPC_Data_Checker\Utils::is_wp_version( '4.8' ) ?
+			$this->assertIXRError( $result )
+			: $this->assertEquals( true, $result instanceof IXR_Error );
+
+		$this->assertEquals( 405, $result->code );
+	}
+
 	public function test_unallowed_method() {
 
 		// Refresh plugin settings.
