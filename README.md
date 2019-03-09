@@ -15,7 +15,7 @@ In the standard WordPress installation JSON REST API and XML-RPC API are enabled
 * **Setup trusted users, IP/Networks and endpoints** for unlogged users REST requests.
 * **Change REST endpoint prefix**.
 * **Disable XML-RPC API** interface.
-* **Remove** <link> to the Really Simple Discovery (RDS) informations.
+* **Remove** `<link>` to the Really Simple Discovery (RDS) informations.
 * **Remove** `X-Pingback` HTTP header.
 * **Setup trusted users, IP/Networks and methods** for XML-RPC requests.
 * **Show user's access informations** in users list administration screen.
