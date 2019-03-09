@@ -228,6 +228,32 @@ class WP_Test_REST_Controller extends WP_Test_REST_Controller_Testcase {
 	}
 
 	/**
+	 * Check requests coming from trusted networks using proxied IP.
+	 */
+	public function test_disabled_rest_trusted_network_proxied() {
+
+		// Refresh plugin settings.
+		$this->refresh_plugin_settings(
+			array(
+				'rest' => array(
+					'disable'                => true,
+					'trusted_networks'       => '10.0.0.0/24',
+					'apply_trusted_networks' => true,
+				),
+				'options' => array(
+					'check_forwarded_remote_ip' => true,
+				),
+			)
+		);
+
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = '102.102.102.102, 10.0.0.10';
+
+		$response = rest_get_server()->serve_request( sprintf( '/wp/v2/posts/%d', self::$post_id ) );
+		$result = json_decode( rest_get_server()->sent_body, true );
+		$this->assertEquals( self::$post_id , $result['id'] );
+	}
+
+	/**
 	 * Check fail of untrusted requests.
 	 */
 	public function test_disabled_rest_untrusted_network() {
@@ -239,7 +265,7 @@ class WP_Test_REST_Controller extends WP_Test_REST_Controller_Testcase {
 					'disable'                => true,
 					'trusted_networks'       => '127.0.0.2/32',
 					'apply_trusted_networks' => true,
-				)
+				),
 			)
 		);
 
@@ -308,7 +334,7 @@ class WP_Test_REST_Controller extends WP_Test_REST_Controller_Testcase {
 					'disable'                => true,
 					'trusted_networks'       => '127.0.0.2/32',
 					'apply_trusted_networks' => true,
-				)
+				),
 			)
 		);
 
@@ -328,7 +354,7 @@ class WP_Test_REST_Controller extends WP_Test_REST_Controller_Testcase {
 				'rest' => array(
 					'disable'     => true,
 					'auth_method' => 'basic_auth',
-				)
+				),
 			)
 		);
 
@@ -351,7 +377,7 @@ class WP_Test_REST_Controller extends WP_Test_REST_Controller_Testcase {
 				'rest' => array(
 					'disable'     => true,
 					'auth_method' => 'basic_auth',
-				)
+				),
 			)
 		);
 
@@ -370,7 +396,7 @@ class WP_Test_REST_Controller extends WP_Test_REST_Controller_Testcase {
 			array(
 				'rest' => array(
 					'disable_jsonp' => true,
-				)
+				),
 			)
 		);
 
