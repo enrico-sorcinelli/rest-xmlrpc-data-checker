@@ -114,15 +114,21 @@ The XML-RPC settings section.
 
 ![XML-RPC settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-2.png)
 
+## Options settings
+
+The plugin options section.
+
+![Options settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-3.png)
+
 ## User profile
 
 Enable XML-RPC and REST interfaces on user profile/user edit pages (available only for users with `edit_users` capability).
 
-![Plugin settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-3.png)
+![Plugin settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-4.png)
 
 ## User list administration screen
 
-![Plugin settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-4.png)
+![Plugin settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-5.png)
 
 Column with REST and XML-RPC API access informations on users list administration screen.
 
