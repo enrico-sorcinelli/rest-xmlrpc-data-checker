@@ -3,8 +3,8 @@ Contributors: enrico.sorcinelli
 Tags: json, rest, xmlrpc, api, security, admin, theme
 Requires at least: 4.4
 Requires PHP: 5.2.4
-Tested up to: 5.0.0
-Stable tag: 1.2.2
+Tested up to: 5.1
+Stable tag: 1.3.0
 License: GPLv2 or later
 
 REST XML-RPC Data Checker allow to check JSON REST and XML-RPC API requests and grant access permissions.
@@ -51,7 +51,7 @@ Once the plugin is installed you can control settings in the following ways:
 
 **`rest_xmlrpc_data_checker_settings`**
 
-Filter allowing to display or not the plugin settings page in the administration.
+Filters plugin settings values.
 
 `apply_filters( 'rest_xmlrpc_data_checker_settings', array $settings )`
 
@@ -105,9 +105,15 @@ Without SSL you are strongly encouraged to to turn off Basic Authentication in p
 
 1. The JSON REST settings section.
 2. The XML-RPC settings section.
-3. Enable XML-RPC and REST interfaces on user profile/user edit pages (available only for users with `edit_users` capability).
-4. User list administration screen.
+3. The Options settings section.
+4. Enable XML-RPC and REST interfaces on user profile/user edit pages (available only for users with `edit_users` capability).
+5. User list administration screen.
 
 == Changelog ==
 
 For REST XML-RPC Data Checker changelog, please see [the Releases page on GitHub](https://github.com/enrico-sorcinelli/rest-xmlrpc-data-checker/releases).
+
+== Upgrade Notice ==
+
+= 1.3.0 =
+Trusted networks check over IP address found in HTTP headers added by proxy or load balancer is now disabled by default. It can be enabled on plugin settings page.
