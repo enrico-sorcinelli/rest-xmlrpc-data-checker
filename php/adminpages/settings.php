@@ -309,8 +309,19 @@ function cb_list( $args = array() ) {
 				<td>
 					<input name="<?php echo esc_attr( $params['prefix'] . 'settings[options][show_user_status_column]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_options_show_user_status_column' ); ?>" value="1" <?php checked( 1, empty( $params['settings']['options']['show_user_status_column'] ) ? 0 : 1, true ); ?>>
 					<label for="<?php echo esc_attr( $params['prefix'] . 'settings_options_show_user_status_column' ); ?>">
-						<?php esc_html_e( ' Add column with REST and XML-RPC API access informations on users list administration screen.', 'rest-xmlrpc-data-checker' ); ?>
+						<?php esc_html_e( 'Add column with REST and XML-RPC API access informations on users list administration screen.', 'rest-xmlrpc-data-checker' ); ?>
 					</label>
+				</td>
+			<tr>
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Trusted networks check', 'rest-xmlrpc-data-checker' ); ?></th>
+				<td>
+					<input name="<?php echo esc_attr( $params['prefix'] . 'settings[options][check_forwarded_remote_ip]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_options_check_forwarded_remote_ip' ); ?>" value="1" <?php checked( 1, empty( $params['settings']['options']['check_forwarded_remote_ip'] ) ? 0 : 1, true ); ?>>
+					<label for="<?php echo esc_attr( $params['prefix'] . 'settings_options_check_forwarded_remote_ip' ); ?>">
+						<?php esc_html_e( 'Uses first the originating IP address if it\'s found in HTTP headers added by proxy or load balancer.', 'rest-xmlrpc-data-checker' ); ?>
+					</label>
+					<p class="description"><?php esc_html_e( 'Only the right-most IP address that connects to the last proxy or load balancer will be used for trusted networks checks.', 'rest-xmlrpc-data-checker' ); ?>
+						<?php /* translators: %s HTTP header */ echo sprintf( __( 'Since it is easy to forge an %s field, enable this option with care.', 'rest-xmlrpc-data-checker' ), '<code>X-Forwarded-For</code>' ); ?></p>
 				</td>
 			<tr>
 			<tr>
