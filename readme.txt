@@ -3,8 +3,8 @@ Contributors: enrico.sorcinelli
 Tags: json, rest, xmlrpc, api, security, admin, theme
 Requires at least: 4.4
 Requires PHP: 5.2.4
-Tested up to: 5.1
-Stable tag: 1.3.0
+Tested up to: 5.2.1
+Stable tag: 1.3.1
 License: GPLv2 or later
 
 REST XML-RPC Data Checker allow to check JSON REST and XML-RPC API requests and grant access permissions.
@@ -15,7 +15,14 @@ JSON REST API and XML-RPC API are powerful ways to remotely interact with WordPr
 
 If you don't have external applications that need to communicate with your WordPress instance using JSON REST API or XML-RPC API you should disable access to them for external requests.
 
-In the standard WordPress installation JSON REST API and XML-RPC API are enabled by default and even if you could do the stuff by writing your own code using native filters, this plugin aims to help you to control JSON REST API and XML-RPC API accesses from the administration panel.
+In the standard WordPress installation JSON REST API and XML-RPC API are enabled by default.
+In particular the REST API is turned on also for unlogged users. This means that your WordPress instance is potentially leaking data, for example anyone could:
+
+* copy easily your published contents natively with the REST API (and not with a web crawler);
+* get the list of all users (with their ID, nickname and name);
+* retrieve other information that you didn't want to be public (such as an unlisted published page or a saved media not yet used).
+
+Even if you could do the stuff by writing your own code using native filters, this plugin aims to help you to control JSON REST API and XML-RPC API accesses from the administration panel or programmatically by a simple API filter.
 
 == Basic Features
 
@@ -115,5 +122,10 @@ For REST XML-RPC Data Checker changelog, please see [the Releases page on GitHub
 
 == Upgrade Notice ==
 
+= 1.3.1 =
+
+Allows to use PHP single line comments in trusted network option; allows to prevent to leave blocks comments in `post_content` via XML-RPC.
+
 = 1.3.0 =
+
 Trusted networks check over IP address found in HTTP headers added by proxy or load balancer is now disabled by default. It can be enabled on plugin settings page.
