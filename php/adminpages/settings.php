@@ -185,7 +185,7 @@ function cb_list( $args = array() ) {
 					<p class="description">
 						<?php
 							/* translators: 1: IP/Networks example, 2: comment syntax, 3: comment syntax */
-							echo sprintf( esc_html__( 'For example: %1$s . You can add also PHP-like single line comments (using %2$s or %3$s).', 'rest-xmlrpc-data-checker' ), '<code>10.10.0.1/32, 10.10.10.0/25</code>', '<code>//</code>', '<code>#</code>' );
+							echo sprintf( esc_html__( 'For example: %1$s . You can add also PHP single line comments (using %2$s or %3$s).', 'rest-xmlrpc-data-checker' ), '<code>10.10.0.1/32, 10.10.10.0/25</code>', '<code>//</code>', '<code>#</code>' );
 						?>
 					</p>
 				</td>
@@ -303,7 +303,7 @@ function cb_list( $args = array() ) {
 					<p class="description">
 						<?php
 							/* translators: 1: IP/Networks example, 2: comment syntax, 3: comment syntax */ 
-							echo sprintf( esc_html__( 'For example: %1$s . You can add also PHP-like single line comments (using %2$s or %3$s).', 'rest-xmlrpc-data-checker' ), '<code>10.10.0.1/32, 10.10.10.0/25</code>', '<code>//</code>', '<code>#</code>' ); 
+							echo sprintf( esc_html__( 'For example: %1$s . You can add also PHP single line comments (using %2$s or %3$s).', 'rest-xmlrpc-data-checker' ), '<code>10.10.0.1/32, 10.10.10.0/25</code>', '<code>//</code>', '<code>#</code>' ); 
 						?>
 					</p>
 				</td>
