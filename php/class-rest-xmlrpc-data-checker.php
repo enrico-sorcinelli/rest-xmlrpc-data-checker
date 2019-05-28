@@ -164,6 +164,7 @@ class REST_XMLRPC_Data_Checker {
 	 * @param \WP $wp Current WordPress environment instance.
 	 */
 	public function filter_wp( $wp ) {
+		// PHPCS:ignore
 		@header_remove( 'X-Pingback' );
 	}
 
@@ -193,15 +194,17 @@ class REST_XMLRPC_Data_Checker {
 					'allowed_routes'                => array(),
 				),
 				'xmlrpc'  => array(
-					'disable'                     => false,
-					'remove_rsd_link'             => false,
-					'remove_pingback_http_header' => false,
-					'apply_trusted_users'         => false,
-					'trusted_users'               => array(),
-					'apply_trusted_networks'      => false,
-					'trusted_networks'            => '',
-					'apply_allowed_methods'       => false,
-					'allowed_methods'             => array(),
+					'disable'                      => false,
+					'process_post_content'         => false,
+					'restore_original_post_status' => false,
+					'remove_rsd_link'              => false,
+					'remove_pingback_http_header'  => false,
+					'apply_trusted_users'          => false,
+					'trusted_users'                => array(),
+					'apply_trusted_networks'       => false,
+					'trusted_networks'             => '',
+					'apply_allowed_methods'        => false,
+					'allowed_methods'              => array(),
 				),
 				'options' => array(
 					'show_user_status_column'   => true,
