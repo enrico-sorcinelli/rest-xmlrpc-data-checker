@@ -182,7 +182,12 @@ function cb_list( $args = array() ) {
 						<?php esc_html_e( 'Add one trusted IP or network per line', 'rest-xmlrpc-data-checker' ); ?>
 					</p>
 					<textarea name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][trusted_networks]' ); ?>" rows="5" cols="50" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_trusted_networks' ); ?>" class="large-text code"><?php echo esc_html( $params['settings']['rest']['trusted_networks'] ); ?></textarea>
-					<p class="description"><?php esc_html_e( 'For example: 10.10.0.1/32 , 10.10.10.0/25 .', 'rest-xmlrpc-data-checker' ); ?></p>
+					<p class="description">
+						<?php
+							/* translators: 1: IP/Networks example, 2: comment syntax, 3: comment syntax */
+							echo sprintf( esc_html__( 'For example: %1$s . You can add also PHP-like single line comments (using %2$s or %3$s).', 'rest-xmlrpc-data-checker' ), '<code>10.10.0.1/32, 10.10.10.0/25</code>', '<code>//</code>', '<code>#</code>' );
+						?>
+					</p>
 				</td>
 			</tr>
 			<tr>
@@ -295,7 +300,12 @@ function cb_list( $args = array() ) {
 						<?php esc_html_e( 'Add one trusted IP or network per line', 'rest-xmlrpc-data-checker' ); ?>
 					</p>
 					<textarea name="<?php echo esc_attr( $params['prefix'] . 'settings[xmlrpc][trusted_networks]' ); ?>" rows="5" cols="50" id="<?php echo esc_attr( $params['prefix'] . 'settings_xmlrpc_trusted_networks' ); ?>" class="large-text code"><?php echo esc_html( $params['settings']['xmlrpc']['trusted_networks'] ); ?></textarea>
-					<p class="description"><?php esc_html_e( 'For example: 10.10.0.1/32 or 10.10.10.0/25 .', 'rest-xmlrpc-data-checker' ); ?></p>
+					<p class="description">
+						<?php
+							/* translators: 1: IP/Networks example, 2: comment syntax, 3: comment syntax */ 
+							echo sprintf( esc_html__( 'For example: %1$s . You can add also PHP-like single line comments (using %2$s or %3$s).', 'rest-xmlrpc-data-checker' ), '<code>10.10.0.1/32, 10.10.10.0/25</code>', '<code>//</code>', '<code>#</code>' ); 
+						?>
+					</p>
 				</td>
 			</tr>
 			<tr>
