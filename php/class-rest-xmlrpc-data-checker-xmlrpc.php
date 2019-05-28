@@ -72,6 +72,9 @@ class XMLRPC {
 		if ( $this->plugin_settings['rest']['remove_xmlrpc_rsd_apis'] ) {
 			remove_action( 'xmlrpc_rsd_apis', 'rest_output_rsd' );
 		}
+
+		// Filter XML-RPC post result.
+		add_filter( 'xmlrpc_prepare_post', array( $this, 'filter_xmlrpc_prepare_post' ), 10, 3 );
 	}
 
 	/**
@@ -120,6 +123,7 @@ class XMLRPC {
 
 		// Apply check on setting basis.
 		if ( $this->plugin_settings['xmlrpc']['apply_allowed_methods'] ) {
+
 			// Remove all unallowed methods.
 			$methods = array_intersect_key( $methods, array_flip( $this->plugin_settings['xmlrpc']['allowed_methods'] ) );
 		}
@@ -142,7 +146,10 @@ class XMLRPC {
 
 		// Apply check access list on setting basis.
 		if ( $this->plugin_settings['xmlrpc']['apply_trusted_networks'] && ! empty( $this->plugin_settings['xmlrpc']['trusted_networks'] ) ) {
-			$trusted_networks = preg_split( '/(\s|,|;)+/', $this->plugin_settings['xmlrpc']['trusted_networks'] );
+
+			// Get IP/Networks.
+			$trusted_networks = preg_split( '/(\s|,|;)+/', trim( \REST_XMLRPC_Data_Checker\Utils::strip_comments( array( 'string' => $this->plugin_settings['xmlrpc']['trusted_networks'] ) ) ) );
+
 			if ( ! \REST_XMLRPC_Data_Checker\Utils::check_network( \REST_XMLRPC_Data_Checker\Utils::get_remote_ip( $this->plugin_settings['options']['check_forwarded_remote_ip'] ), $trusted_networks ) ) {
 				return false;
 			}
@@ -150,4 +157,35 @@ class XMLRPC {
 
 		return true;
 	}
+
+	/**
+	 * Filter XML-RPC post result according to plugin settings.
+	 *
+	 * @since 1.3.1
+	 *
+	 * @param array $_post  Array of modified post data.
+	 * @param array $post   Array of original post data.
+	 * @param array $fields Array of post fields.
+	 *
+	 * @return array
+	 */
+	public function filter_xmlrpc_prepare_post( $_post, $post, $fields ) {
+
+		// Check for fields post data.
+		if ( in_array( 'post', $fields, true ) ) {
+
+			// Apply default WordPress rendering to post_content.
+			if ( $this->plugin_settings['xmlrpc']['process_post_content'] ) {
+				$_post['post_content'] = apply_filters( 'the_content', $_post['post_content'] );
+			}
+
+			// Restore original post_status value.
+			if ( $this->plugin_settings['xmlrpc']['restore_original_post_status'] ) {
+				$_post['post_status'] = $post['post_status'];
+			}
+		}
+
+		return $_post;
+	}
+
 }
