@@ -4,7 +4,14 @@ JSON REST API and XML-RPC API are powerful ways to remotely interact with WordPr
 
 If you don't have external applications that need to communicate with your WordPress instance using JSON REST API or XML-RPC API you should disable access to them for external requests.
 
-In the standard WordPress installation JSON REST API and XML-RPC API are enabled by default and even if you could do the stuff by writing your own code using native filters, this plugin aims to help you to control JSON REST API and XML-RPC API accesses from the administration panel.
+In the standard WordPress installation JSON REST API and XML-RPC API are enabled by default.
+In particular the REST API is turned on also for unlogged users. This means that your WordPress instance is potentially leaking data, for example anyone could:
+
+* copy easily your published contents natively with the REST API (and not with a web crawler);
+* get the list of all users (with their ID, nickname and name);
+* retrieve other information that you didn't want to be public (such as an unlisted published page or a saved media not yet used).
+
+Even if you could do the stuff by writing your own code using native filters, this plugin aims to help you to control JSON REST API and XML-RPC API accesses from the administration panel or programmatically by a simple API filter.
 
 # Basic Features
 
