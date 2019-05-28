@@ -5,6 +5,9 @@
  * @package rest-xmlrpc-data-checker
  */
 
+// PHPCS:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
+// PHPCS:disable Generic.WhiteSpace.ScopeIndent.Incorrect
+
 ?>
 <div class="table">
 	<div class="row">
