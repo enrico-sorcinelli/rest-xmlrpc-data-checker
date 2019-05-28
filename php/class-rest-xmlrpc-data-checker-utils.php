@@ -8,6 +8,12 @@
 
 namespace REST_XMLRPC_Data_Checker;
 
+// Check running WordPress instance.
+if ( ! defined( 'ABSPATH' ) ) {
+	header( 'HTTP/1.1 404 Not Found' );
+	exit();
+}
+
 /**
  * Class Utils
  */
@@ -52,7 +58,7 @@ class Utils {
 		}
 
 		// Consider template a file.
-		return include $template;
+		return include( $template );
 	}
 
 	/**
@@ -78,7 +84,7 @@ class Utils {
 		if ( is_callable( $template ) ) {
 			$ret = call_user_func( $template, $params );
 		} else {
-			$ret = include $template;
+			$ret = include( $template );
 		}
 
 		$stdout = ob_get_clean();
@@ -102,7 +108,7 @@ class Utils {
 	public static function is_regex( $regex = null ) {
 
 		// Pattern is broken.
-		if ( @preg_match( $regex, null ) === false ) {
+		if ( @preg_match( $regex, null ) === false ) { // PHPCS:ignore
 			return false;
 		}
 
@@ -114,7 +120,7 @@ class Utils {
 	 * Inserts a new key/value before s specific key in the array.
 	 *
 	 * @param array $args {
-	 *     Array of arguments for constructor.
+	 *     Array of arguments.
 	 *
 	 *     @type string  $key            Array key to insert before.
 	 *     @type array   $array          Original array.
@@ -175,12 +181,6 @@ class Utils {
 	/**
 	 * Get remote client IP.
 	 *
-	 * @return string
-	 */
-
-	/**
-	 * Get remote client IP.
-	 *
 	 * @param bool $proxy Try to get remote IP from known headers added by HTTP
 	 *                    proxy and load balancer. Default to `false`.
 	 *
@@ -231,6 +231,7 @@ class Utils {
 
 		// Cycle over networks.
 		foreach ( $networks as $mask ) {
+			// PHPCS:ignore
 			@list( $net, $bits ) = explode( '/', $mask );
 			$bits                = isset( $bits ) ? $bits : 32;
 			$bitmask             = -pow( 2, 32 - $bits ) & 0x00000000FFFFFFFF;
@@ -256,6 +257,29 @@ class Utils {
 	public static function is_wp_version( $version = '4.0', $operator = '>=' ) {
 		global $wp_version;
 		return version_compare( $wp_version, $version, $operator );
+	}
+
+	/**
+	 * Remove PHP and Perl-style single line comments.
+	 *
+	 * @param array $args {
+	 *     Array of arguments.
+	 *
+	 *     @type string  $string         Array key to insert before.
+	 *     @type array   $array          Original array.
+	 *     @type array   $new_array      Array to insert.
+	 *     @type boolean $force_if_empty Add always even if the keys is empty.
+	 * }
+	 * @return string
+	 */
+	public static function strip_comments( $args = array() ) {
+		$args = array_merge( array( 'string' => '' ), $args );
+
+		if ( ! empty( $args['string'] ) ) {
+			$args['string'] = preg_replace( '/\s?(?:#|\/\/).*/m', '', $args['string'] );
+		}
+
+		return $args['string'];
 	}
 
 }
