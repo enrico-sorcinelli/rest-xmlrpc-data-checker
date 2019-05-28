@@ -5,6 +5,9 @@
  * @package rest-xmlrpc-data-checker
  */
 
+// PHPCS:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
+// PHPCS:disable Generic.WhiteSpace.ScopeIndent.Incorrect
+
 // Global.
 global $wp_query, $wp;
 
@@ -114,12 +117,12 @@ function cb_list( $args = array() ) {
 					<fieldset>
 						<label>
 							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][remove_link_tag]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_remove_link_tag' ); ?>" value="1" <?php checked( 1, $params['settings']['rest']['remove_link_tag'] ); ?>">
-							<?php /* translators: %s tag */ echo sprintf( __( 'Remove REST API %s tag', 'rest-xmlrpc-data-checker' ), '<code>&lt;link&gt;</code>' ); ?>
+							<?php /* translators: %s tag */ echo sprintf( esc_html__( 'Remove REST API %s tag', 'rest-xmlrpc-data-checker' ), '<code>&lt;link&gt;</code>' ); ?>
 						</label>
 						<br>
 						<label>
 							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][remove_link_http_headers]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_remove_link_http_headers' ); ?>" value="1" <?php checked( 1, $params['settings']['rest']['remove_link_http_headers'] ); ?>">
-							<?php /* translators: %s HTTP header */ echo sprintf( __( 'Remove REST API %s HTTP header', 'rest-xmlrpc-data-checker' ), '<code>Link</code>' ); ?>
+							<?php /* translators: %s HTTP header */ echo sprintf( esc_html__( 'Remove REST API %s HTTP header', 'rest-xmlrpc-data-checker' ), '<code>Link</code>' ); ?>
 						</label>
 						<br>
 						<label>
@@ -129,7 +132,7 @@ function cb_list( $args = array() ) {
 						<br>
 						<label>
 							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[rest][remove_oembed_discovery_links]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_rest_remove_oembed_discovery_links' ); ?>" value="1" <?php checked( 1, $params['settings']['rest']['remove_oembed_discovery_links'] ); ?>">
-							<?php /* translators: %s tag */ echo sprintf( __( 'Remove oEmbed discovery %s tags', 'rest-xmlrpc-data-checker' ), '<code>&lt;link&gt;</code>' ); ?>
+							<?php /* translators: %s tag */ echo sprintf( esc_html__( 'Remove oEmbed discovery %s tags', 'rest-xmlrpc-data-checker' ), '<code>&lt;link&gt;</code>' ); ?>
 						</label>
 					</fieldset>
 				</td>
@@ -150,7 +153,7 @@ function cb_list( $args = array() ) {
 							<?php esc_html_e( 'Use Basic Authentication', 'rest-xmlrpc-data-checker' ); ?>
 						</label>
 						<p class="description rest-xmlrpc-data-checker-indent">
-							<?php /* translators: %s tag */ echo sprintf( __( 'This allows you to restrict REST requests only for selected users. They have to supply username/password in the %s HTTP header.', 'rest-xmlrpc-data-checker' ), '<code>Authorization</code>' ); ?>
+							<?php /* translators: %s tag */ echo sprintf( esc_html__( 'This allows you to restrict REST requests only for selected users. They have to supply username/password in the %s HTTP header.', 'rest-xmlrpc-data-checker' ), '<code>Authorization</code>' ); ?>
 							<?php esc_html_e( 'This will applied only if REST API interface has been disabled for unlogged users.', 'rest-xmlrpc-data-checker' ); ?>
 						</p>
 						<div class="update-nag rest_basic_auth_alert">
@@ -232,18 +235,36 @@ function cb_list( $args = array() ) {
 			</tr>
 			<tr>
 				<th scope="row">
+					<?php esc_html_e( 'Post settings', 'rest-xmlrpc-data-checker' ); ?>
+				</th>
+				<td>
+					<input name="<?php echo esc_attr( $params['prefix'] . 'settings[xmlrpc][process_post_content]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_xmlrpc_process_post_content' ); ?>" value="1" <?php checked( 1, $params['settings']['xmlrpc']['process_post_content'] ); ?>">
+					<label for="<?php echo esc_attr( $params['prefix'] . 'settings_xmlrpc_process_post_content' ); ?>">
+						<?php esc_html_e( 'Apply the complete WordPress formatting to the post content body', 'rest-xmlrpc-data-checker' ); ?>
+					</label>
+					<p class="description rest-xmlrpc-data-checker-indent"><?php esc_html_e( 'Applies all registered shortcodes, renders blocks, changes double line-breaks in the text into HTML paragraphs, and so on.', 'rest-xmlrpc-data-checker' ); ?></p>
+					<br>
+					<input name="<?php echo esc_attr( $params['prefix'] . 'settings[xmlrpc][restore_original_post_status]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_xmlrpc_restore_original_post_status' ); ?>" value="1" <?php checked( 1, $params['settings']['xmlrpc']['restore_original_post_status'] ); ?>">
+					<label for="<?php echo esc_attr( $params['prefix'] . 'settings_xmlrpc_restore_original_post_status' ); ?>">
+						<?php /* translators: %s DB field name */ echo sprintf( esc_html__( 'Restore original %s value', 'rest-xmlrpc-data-checker' ), '<code>post_status</code>' ); ?>
+					</label>
+					<p class="description rest-xmlrpc-data-checker-indent"><?php /* translators: %s DB field name */ echo sprintf( esc_html__( 'Since XML-RPC consider future posts as published, enabling this option allow you to restore original post\'s %s value.', 'rest-xmlrpc-data-checker' ), '<code>post_status</code>' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row">
 					<?php esc_html_e( 'XML-RPC Links', 'rest-xmlrpc-data-checker' ); ?>
 				</th>
 				<td>
 					<fieldset>
 						<label>
 							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[xmlrpc][remove_rsd_link]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_xmlrpc_remove_rsd_link' ); ?>" value="1" <?php checked( 1, $params['settings']['xmlrpc']['remove_rsd_link'] ); ?>">
-							<?php /* translators: %s tag */ echo sprintf( __( 'Remove %s to the Really Simple Discovery (RSD) service endpoint informations', 'rest-xmlrpc-data-checker' ), '<code>&lt;link&gt;</code>' ); ?>
+							<?php /* translators: %s tag */ echo sprintf( esc_html__( 'Remove %s to the Really Simple Discovery (RSD) service endpoint informations', 'rest-xmlrpc-data-checker' ), '<code>&lt;link&gt;</code>' ); ?>
 						</label>
 						<br>
 						<label>
 							<input name="<?php echo esc_attr( $params['prefix'] . 'settings[xmlrpc][remove_pingback_http_header]' ); ?>" type="checkbox" id="<?php echo esc_attr( $params['prefix'] . 'settings_xmlrpc_remove_pingback_http_header' ); ?>" value="1" <?php checked( 1, $params['settings']['xmlrpc']['remove_pingback_http_header'] ); ?>">
-							<?php /* translators: %s HTTP header */ echo sprintf( __( 'Remove %s HTTP header', 'rest-xmlrpc-data-checker' ), '<code>X-Pingback</code>' ); ?>
+							<?php /* translators: %s HTTP header */ echo sprintf( esc_html__( 'Remove %s HTTP header', 'rest-xmlrpc-data-checker' ), '<code>X-Pingback</code>' ); ?>
 						</label>
 					</fieldset>
 				</td>
@@ -321,7 +342,7 @@ function cb_list( $args = array() ) {
 						<?php esc_html_e( 'Uses first the originating IP address if it\'s found in HTTP headers added by proxy or load balancer.', 'rest-xmlrpc-data-checker' ); ?>
 					</label>
 					<p class="description"><?php esc_html_e( 'Only the right-most IP address that connects to the last proxy or load balancer will be used for trusted networks checks.', 'rest-xmlrpc-data-checker' ); ?>
-						<?php /* translators: %s HTTP header */ echo sprintf( __( 'Since it is easy to forge an %s field, enable this option with care.', 'rest-xmlrpc-data-checker' ), '<code>X-Forwarded-For</code>' ); ?></p>
+						<?php /* translators: %s HTTP header */ echo sprintf( esc_html__( 'Since it is easy to forge an %s field, enable this option with care.', 'rest-xmlrpc-data-checker' ), '<code>X-Forwarded-For</code>' ); ?></p>
 				</td>
 			<tr>
 			<tr>
