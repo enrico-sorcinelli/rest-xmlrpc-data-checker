@@ -11,6 +11,12 @@ if ( ! $_tests_dir ) {
 	$_tests_dir = rtrim( sys_get_temp_dir(), '/\\' ) . '/wordpress-tests-lib';
 }
 
+// Allow to override PHP executable used by WordPress Test framework.
+$_php_binary = getenv( 'WP_PHP_BINARY' );
+if ( ! empty( $_php_binary ) ) {
+	define( 'WP_PHP_BINARY', $_php_binary );
+}
+
 if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
 	echo "Could not find $_tests_dir/includes/functions.php, have you run bin/install-wp-tests.sh ?" . PHP_EOL;
 	exit( 1 );
