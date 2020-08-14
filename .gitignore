@@ -39,9 +39,11 @@ dwsync.xml
 intermediate
 cache
 tmp
+build
+TODO.md
 
 /composer.lock
 /vendor
 /node_modules
-
+package-lock.json
 Makefile
