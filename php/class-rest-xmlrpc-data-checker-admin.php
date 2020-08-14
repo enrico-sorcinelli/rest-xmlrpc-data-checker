@@ -41,6 +41,13 @@ class Admin {
 	private $admin_pages = array();
 
 	/**
+	 * For use of minified libraries.
+	 *
+	 * @var string
+	 */
+	private $assets_suffix;
+
+	/**
 	 * Construct the plugin.
 	 *
 	 * @param array $args {
@@ -75,6 +82,10 @@ class Admin {
 			return;
 		}
 
+		// Use minified libraries if SCRIPT_DEBUG is turned off.
+		$this->assets_suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+		// Custom list table class.
 		require_once REST_XMLRPC_DATA_CHECKER_BASEDIR . '/php/class-rest-xmlrpc-data-checker-users-wp-list-table.php';
 
 		// Menu settings.
@@ -206,7 +217,7 @@ class Admin {
 
 		wp_enqueue_style(
 			$this->prefix . 'css',
-			REST_XMLRPC_DATA_CHECKER_BASEURL . '/assets/css/admin.css',
+			REST_XMLRPC_DATA_CHECKER_BASEURL . '/assets/css/admin' . $this->assets_suffix . '.css',
 			array(),
 			REST_XMLRPC_DATA_CHECKER_VERSION,
 			'screen'
@@ -223,7 +234,7 @@ class Admin {
 
 		wp_enqueue_script(
 			$this->prefix . 'js',
-			REST_XMLRPC_DATA_CHECKER_BASEURL . '/assets/js/admin.js',
+			REST_XMLRPC_DATA_CHECKER_BASEURL . '/assets/js/admin' . $this->assets_suffix . '.js',
 			array(),
 			REST_XMLRPC_DATA_CHECKER_VERSION,
 			false
