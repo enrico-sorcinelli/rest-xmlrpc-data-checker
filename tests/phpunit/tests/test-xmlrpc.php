@@ -286,6 +286,9 @@ class Tests_XMLRPC extends WP_XMLRPC_UnitTestCase {
 	 */
 	public function test_untrusted_network_proxied() {
 
+		// Moved up since WP 5.7.3.
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = '102.102.102.102, 10.0.0.10';
+
 		// Refresh plugin settings.
 		$this->refresh_plugin_settings(
 			array(
@@ -301,8 +304,6 @@ class Tests_XMLRPC extends WP_XMLRPC_UnitTestCase {
 				),
 			)
 		);
-
-		$_SERVER['HTTP_X_FORWARDED_FOR'] = '102.102.102.102, 10.0.0.10';
 
 		$result = $this->myxmlrpcserver->wp_getPost( array( 1, 'author', 'author', $this->post_id ) );
 
@@ -427,6 +428,8 @@ class Tests_XMLRPC extends WP_XMLRPC_UnitTestCase {
 	 * Refresh plugin settings.
 	 *
 	 * @param array $new_settings Plugin new settings values.
+	 *
+	 * @since 1.4.0 Create new one XML server each time since 'xmlrpc_enabled' filter has been moved to 'wp_xmlrpc_server' constructor.
 	 */
 	public function refresh_plugin_settings( $new_settings = array() ) {
 
@@ -437,6 +440,11 @@ class Tests_XMLRPC extends WP_XMLRPC_UnitTestCase {
 		\REST_XMLRPC_Data_Checker::refresh_plugin_settings();
 
 		remove_filter( 'rest_xmlrpc_data_checker_settings', array( $this, 'filter_rest_xmlrpc_data_checker_settings' ) );
+
+		// Needed to refresh 'is_enabled' private property.
+		if ( \REST_XMLRPC_Data_Checker\Utils::is_wp_version( '5.7.3' ) ) {
+			$this->myxmlrpcserver = new wp_xmlrpc_server();
+		}
 	}
 
 }
