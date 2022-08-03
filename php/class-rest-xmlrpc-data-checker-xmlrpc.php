@@ -133,7 +133,7 @@ class XMLRPC {
 
 	/**
 	 * 'xmlrpc_enabled' filter hook. Check remote IP over trusted IP list
-	 * and turn on/off XML-RPC inteface accordingly.
+	 * and turn on/off XML-RPC interface accordingly.
 	 *
 	 * @return boolean
 	 */
