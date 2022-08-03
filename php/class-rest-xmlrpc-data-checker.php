@@ -73,8 +73,6 @@ class REST_XMLRPC_Data_Checker {
 	 *     Arguments list.
 	 *     @type boolean $debug Default value is `false`.
 	 * }
-	 *
-	 *  @return REST_XMLRPC_Data_Checker
 	 */
 	public function __construct( $args = array() ) {
 
@@ -142,6 +140,9 @@ class REST_XMLRPC_Data_Checker {
 		if ( $this->plugin_settings['xmlrpc']['disable'] || $this->plugin_settings['xmlrpc']['remove_pingback_http_header'] ) {
 			add_action( 'wp', array( $this, 'filter_wp' ), 10 );
 		};
+
+		// Handle specific plugin caps for multisite superadmin.
+		add_filter( 'map_meta_cap', array( $this, 'filter_map_meta_cap' ), 10, 3 );
 	}
 
 	/**
@@ -166,6 +167,35 @@ class REST_XMLRPC_Data_Checker {
 	public function filter_wp( $wp ) {
 		// PHPCS:ignore
 		@header_remove( 'X-Pingback' );
+	}
+
+	/**
+	 * Multisite super admin has all caps by definition unless specifically denied.
+	 *
+	 * @param array   $caps     Capabilities.
+	 * @param string  $cap      Capability.
+	 * @param integer $user_id  User ID.
+	 *
+	 * @return array
+	 */
+	public function filter_map_meta_cap( $caps, $cap, $user_id ) {
+
+		// Only checks for custom_capability.
+		if (
+			is_multisite()
+			&& is_super_admin( $user_id )
+			&& ( 'rest_xmlrpc_data_checker_xmlrpc_enable' === $cap || 'rest_xmlrpc_data_checker_rest_enable' === $cap )
+		) {
+			$user      = get_userdata( $user_id );
+			$user_caps = $user->get_role_caps();
+
+			// If the user does not have the capability, or it's denied, then add do_not_allow.
+			if ( empty( $user_caps[ $cap ] ) ) {
+				$caps[] = 'do_not_allow';
+			}
+		}
+
+		return $caps;
 	}
 
 	/**
