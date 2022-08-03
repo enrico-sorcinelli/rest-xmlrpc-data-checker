@@ -81,7 +81,7 @@ class Users_WP_List_Table extends \WP_List_Table {
 		);
 
 		$columns               = $this->get_columns();
-		$hidden                = [];
+		$hidden                = array();
 		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 		$this->items           = $args['items'];
