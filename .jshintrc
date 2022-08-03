@@ -16,6 +16,7 @@
 	"browser": true,
 	"globals": {
 		"rest_xmlrpc_data_checker_i18n": false,
+		"rest_xmlrpc_data_checker_jft_items": false,
 		"_": false,
 		"Backbone": false,
 		"jQuery": false,
