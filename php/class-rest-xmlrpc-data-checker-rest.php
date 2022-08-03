@@ -34,15 +34,13 @@ class Rest {
 	public $plugin_settings;
 
 	/**
-	 * Construct the plugin.
+	 * Plugin REST constructor.
 	 *
 	 * @param array $args {
 	 *     Arguments list.
 	 *     @type string  $prefix
 	 *     @type boolean $debug
 	 * }
-	 *
-	 * @return Rest
 	 */
 	public function __construct( $args = array() ) {
 
