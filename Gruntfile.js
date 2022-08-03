@@ -2,6 +2,10 @@
 module.exports = function( grunt ) {
 	'use strict';
 
+	var options = {
+		phpcs_bin: grunt.option( 'phpcs-bin' ) || 'phpcs'
+	};
+
 	grunt.initConfig({
 
 		// Load package data.
@@ -101,7 +105,7 @@ module.exports = function( grunt ) {
 				]
 			},
 			options: {
-				bin: 'phpcs --exclude=Generic.Files.LineEndings',
+				bin: options.phpcs_bin + ' --exclude=Generic.Files.LineEndings',
 				standard: 'WordPress-Extra',
 				verbose: true
 			}
@@ -330,6 +334,11 @@ module.exports = function( grunt ) {
 				version1: 'plugin',
 				version2: grunt.file.read( 'rest-xmlrpc-data-checker.php' ).match( /VERSION', '(.*)'/ )[1],
 				compare: '=='
+			},
+			pluginVsCHANGELOG: {
+				version1: 'plugin',
+				version2: grunt.file.read( 'CHANGELOG.md' ).match( /## \[(.*)\]/ )[1],
+				compare: '=='
 			}
 		}
 
@@ -364,8 +373,8 @@ module.exports = function( grunt ) {
 	]);
 
 	grunt.registerTask( 'build', [
-		'default',
 		'check',
+		'default',
 		'readme',
 		'clean',
 		'copy',
