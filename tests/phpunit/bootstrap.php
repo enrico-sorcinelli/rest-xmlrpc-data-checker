@@ -17,6 +17,12 @@ if ( ! empty( $_php_binary ) ) {
 	define( 'WP_PHP_BINARY', $_php_binary );
 }
 
+// Allow to set PHPUnit Polyfills path library from `WP_TESTS_PHPUNIT_POLYFILLS_PATH` environment variable.
+$_phpunit_polyfills_path = getenv( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH' );
+if ( ! empty( $_phpunit_polyfills_path ) ) {
+	define( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH', $_phpunit_polyfills_path );
+}
+
 if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
 	echo "Could not find $_tests_dir/includes/functions.php, have you run bin/install-wp-tests.sh ?" . PHP_EOL;
 	exit( 1 );
