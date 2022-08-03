@@ -8,54 +8,7 @@
 // PHPCS:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 // PHPCS:disable Generic.WhiteSpace.ScopeIndent.Incorrect
 
-// Global.
-global $wp_query, $wp;
-
-/**
- * Build checkbox list.
- *
- * @param array $args {
- *     Arguments list.
- *     @type array  $items
- *     @type string $name
- *     @type array  $checked_items
- * }
- */
-function cb_list( $args = array() ) {
-	$args = array_merge(
-		array(
-			'items'         => array(),
-			'name'          => '',
-			'checked_items' => array(),
-		),
-		$args
-	);
-?>
-		<div class="rest-xmlrpc-data-checker-cb-list">
-<?php
-	foreach ( $args['items']  as $key => $value ) {
-?>
-			<h2><input type="checkbox"> <span class="closed"><?php echo esc_html( $key ); ?></span></h2>
-			<ul>
-<?php
-		foreach ( $value as $item ) {
-?>
-				<li>
-					<label>
-						<input name="<?php echo esc_attr( $args['name'] ); ?>" type="checkbox" value="<?php echo esc_attr( $item ); ?>" <?php checked( 1, in_array( $item, $args['checked_items'], true ) ); ?>">
-						<?php echo esc_html( $item ); ?>
-					</label>
-				</li>
-<?php
-		}
-?>
-			</ul>
-<?php
-	}
-?>
-		<div>
-<?php
-}
+echo '<script type="text/javascript"> var rest_xmlrpc_data_checker_jft_items = ' . json_encode( $params['jft_items'] ) . ';</script>';
 ?>
 <div class="wrap">
 	<h1><?php esc_html_e( 'REST XML-RPC Data Checker', 'rest-xmlrpc-data-checker' ); ?></h1>
@@ -201,15 +154,7 @@ function cb_list( $args = array() ) {
 						<?php esc_html_e( 'With this option active, you can selectively allow REST routes.', 'rest-xmlrpc-data-checker' ); ?><br>
 						<?php esc_html_e( 'This will applied only if REST API interface has been disabled for unlogged users.', 'rest-xmlrpc-data-checker' ); ?>
 					</p>
-					<?php
-						cb_list(
-							array(
-								'items'         => $params['rest_routes'],
-								'name'          => $params['prefix'] . 'settings[rest][allowed_routes][]',
-								'checked_items' => $params['settings']['rest']['allowed_routes'],
-							)
-						);
-					?>
+					<div class="rest-xmlrpc-data-checker-cb-list" id="rest-xmlrpc-data-checker-rest-routes"></div>
 				</td>
 			</tr>
 		</table>
@@ -318,15 +263,7 @@ function cb_list( $args = array() ) {
 					<p>
 						<?php esc_html_e( 'With this option active, you can selectively allow XML-RPC methods.', 'rest-xmlrpc-data-checker' ); ?>
 					</p>
-					<?php
-						cb_list(
-							array(
-								'items'         => $params['xmlrpc_methods'],
-								'name'          => $params['prefix'] . 'settings[xmlrpc][allowed_methods][]',
-								'checked_items' => $params['settings']['xmlrpc']['allowed_methods'],
-							)
-						);
-					?>
+					<div class="rest-xmlrpc-data-checker-cb-list" id="rest-xmlrpc-data-checker-xmlrpc-methods"></div>
 				</td>
 			</tr>
 		</table>
