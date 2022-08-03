@@ -130,7 +130,7 @@ class Utils {
 	 *
 	 * @return array The new array if the key exists.
 	 */
-	public static function array_insert_before( $args = [] ) {
+	public static function array_insert_before( $args = array() ) {
 
 		// Check array.
 		if ( ! is_array( $args['array'] ) || ! is_array( $args['new_array'] ) ) {
