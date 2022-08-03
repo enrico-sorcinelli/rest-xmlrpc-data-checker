@@ -48,15 +48,13 @@ class Admin {
 	private $assets_suffix;
 
 	/**
-	 * Construct the plugin.
+	 * Plugin Admin constructor.
 	 *
 	 * @param array $args {
 	 *     Arguments list.
 	 *     @type string  $prefix
 	 *     @type boolean $debug
 	 * }
-	 *
-	 * @return object
 	 */
 	public function __construct( $args = array() ) {
 
@@ -213,12 +211,19 @@ class Admin {
 	 * @return void
 	 */
 	public function load_css() {
-		global $post_type;
+
+		wp_enqueue_style(
+			$this->prefix . 'jquery-flex-tree-css',
+			REST_XMLRPC_DATA_CHECKER_BASEURL . 'vendor/jquery-flex-tree/flex-tree-minimal.min.css',
+			array(),
+			REST_XMLRPC_DATA_CHECKER_VERSION,
+			'screen'
+		);
 
 		wp_enqueue_style(
 			$this->prefix . 'css',
 			REST_XMLRPC_DATA_CHECKER_BASEURL . '/assets/css/admin' . $this->assets_suffix . '.css',
-			array(),
+			$this->prefix . 'jquery-flex-tree-css',
 			REST_XMLRPC_DATA_CHECKER_VERSION,
 			'screen'
 		);
@@ -230,12 +235,19 @@ class Admin {
 	 * @return void
 	 */
 	public function load_javascript() {
-		global $post_type;
+
+		wp_enqueue_script(
+			$this->prefix . 'jquery-flex-tree-js',
+			REST_XMLRPC_DATA_CHECKER_BASEURL . 'vendor/jquery-flex-tree/flex-tree.min.js',
+			array(),
+			REST_XMLRPC_DATA_CHECKER_VERSION,
+			false
+		);
 
 		wp_enqueue_script(
 			$this->prefix . 'js',
 			REST_XMLRPC_DATA_CHECKER_BASEURL . '/assets/js/admin' . $this->assets_suffix . '.js',
-			array(),
+			$this->prefix . 'jquery-flex-tree-js',
 			REST_XMLRPC_DATA_CHECKER_VERSION,
 			false
 		);
@@ -339,6 +351,20 @@ class Admin {
 						'cb_name'     => $this->prefix . 'settings[rest][trusted_users][]',
 						'cb_meta_key' => $this->prefix . 'rest_enable',
 					)
+				),
+				'jft_items'         => array(
+					'rest'   => $this->build_jft_items(
+						array(
+							'items'         => $rest_routes_items,
+							'checked_items' => $this->plugin_settings['rest']['allowed_routes'],
+						)
+					),
+					'xmlrpc' => $this->build_jft_items(
+						array(
+							'items'         => $xmlrpc_methods_items,
+							'checked_items' => $this->plugin_settings['xmlrpc']['allowed_methods'],
+						)
+					),
 				),
 			)
 		);
@@ -640,5 +666,70 @@ class Admin {
 		}
 
 		return $value;
+	}
+
+	/**
+	 * Prepare items for use with jQuery Flex Tree.
+	 *
+	 * @param array $args {
+	 *     Arguments list.
+	 *     @type string $id            Element ID.
+	 *     @type array  $items         Items.
+	 *     @type string $name          Element name.
+	 *     @type array  $checked_items Checked elements.
+	 * }
+	 *
+	 * @since 1.3.3
+	 *
+	 * @return array
+	 */
+	public function build_jft_items( $args = array() ) {
+
+		$args = array_merge(
+			array(
+				'id'            => null,
+				'items'         => array(),
+				'name'          => '',
+				'checked_items' => array(),
+			),
+			$args
+		);
+
+		$jft_items = array();
+
+		foreach ( $args['items'] as $key => $value ) {
+			if ( is_array( $value ) ) {
+				$children = array();
+				foreach ( $value as $item ) {
+					array_push(
+						$children,
+						array(
+							'label'   => $item,
+							'value'   => $item,
+							'checked' => in_array( $item, $args['checked_items'], true ),
+						)
+					);
+				}
+				array_push(
+					$jft_items,
+					array(
+						'label'     => $key,
+						'childrens' => $children,
+					)
+				);
+			}
+			else {
+				array_push(
+					$jft_items,
+					array(
+						'label'   => $value,
+						'value'   => $value,
+						'checked' => in_array( $value, $args['checked_items'], true ),
+					)
+				);
+			}
+		}
+
+		return $jft_items;
 	}
 }
