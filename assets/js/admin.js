@@ -63,65 +63,25 @@
 			} );
 		}
 
-		// Handle toggle over methods/end-point.
-		$( '.rest-xmlrpc-data-checker-cb-list h2 span' ).on( 'click', function() {
-			$( this )
-				.toggleClass( 'closed' )
-				.parent().next().toggle( 200 );
-
-		} );
-
-		// Check all/none over methods/end-point.
-		$( '.rest-xmlrpc-data-checker-cb-list h2' ).find( 'input[type="checkbox"]:first' ).on( 'click', function() {
-			$( this ).removeClass( 'indeterminate' );
-			$( this ).parent().next().find( 'input[type="checkbox"]' ).prop( 'checked', $( this ).prop( 'checked' ) );
-		} );
-
-		// Handle toggle on 'all' checkboxes.
-		var check_all_checkbox = function() {
-			var $all_cb = $( this ).parents( 'ul' ).prev().find( 'input[type="checkbox"]:first' );
-
-			// Remove checkall.
-			if ( ! $( this ).prop( 'checked' ) ) {
-				$all_cb.prop( 'checked', false );
+		// Setup jQuery Flex Tree for REST routes.
+		$( '#rest-xmlrpc-data-checker-rest-routes' ).flexTree(
+			{
+				type: 'checkbox',
+				name: 'rest_xmlrpc_data_checker_settings[rest][allowed_routes][]',
+				collapsed: true,
+				items: rest_xmlrpc_data_checker_jft_items.rest
 			}
-			var all_is_checked = true,
-				some_is_checked = false;
+		);
 
-			// Check all childrens.
-			$( this ).parents( 'ul' ).find( 'input[type="checkbox"]' ).each( function() {
-				if ( ! $( this ).prop( 'checked' ) ) {
-					all_is_checked = false;
-				}
-				else {
-					some_is_checked = true;
-				}
-			} );
-
-			if ( some_is_checked ) {
-				$all_cb.addClass( 'indeterminate' )
-					.prop( 'indeterminate', true );
+		// Setup jQuery Flex Tree for XML-RPC methods.
+		$( '#rest-xmlrpc-data-checker-xmlrpc-methods' ).flexTree(
+			{
+				type: 'checkbox',
+				name: 'rest_xmlrpc_data_checker_settings[xmlrpc][allowed_methods][]',
+				collapsed: true,
+				items: rest_xmlrpc_data_checker_jft_items.xmlrpc
 			}
-			else {
-				$all_cb.removeClass( 'indeterminate' )
-					.prop( 'indeterminate', false );
-			}
-
-			if ( all_is_checked ) {
-				$all_cb.prop( 'checked', true )
-					.prop( 'indeterminate', false )
-					.removeClass( 'indeterminate' );
-			}
-
-		};
-
-		// Check parent at run time.
-		$( '.rest-xmlrpc-data-checker-cb-list ul input[type="checkbox"]' ).on( 'click', check_all_checkbox );
-
-		// Check parent checkbox on load.
-		$( '.rest-xmlrpc-data-checker-cb-list ul' ).each( function() {
-			( $( 'input[type="checkbox"]:first', this ) ).each( check_all_checkbox );
-		} );
+		);
 
 	});
 })( jQuery );
