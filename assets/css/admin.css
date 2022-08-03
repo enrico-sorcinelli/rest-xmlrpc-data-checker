@@ -27,36 +27,8 @@ h2.nav-tab-wrapper a.rest-xmlrpc-data-checker {
 .form-table .rest-xmlrpc-data-checker-cb-list {
 	background-color: #fff;
 	border: 1px solid #e5e5e5;
+	padding: 0 10px;
 }
-
-.form-table .rest-xmlrpc-data-checker-cb-list h2 span {
-	cursor: pointer;
-}
-
-.form-table .rest-xmlrpc-data-checker-cb-list ul {
-	display: none;
-	margin-top: 0;
-	margin-left: 34px;
-}
-
-.form-table .rest-xmlrpc-data-checker-cb-list h2 span:after,
-.form-table .rest-xmlrpc-data-checker-cb-list h2 span.closed:after {
-	content: "\f142";
-	display: inline-block;
-	font: 400 20px / 1 dashicons;
-	width: 20px;
-	margin-top: 4px;
-	vertical-align: bottom;
-}
-
-.form-table .rest-xmlrpc-data-checker-cb-list h2 span:after {
-	color: #72777c;
-}
-
-.form-table .rest-xmlrpc-data-checker-cb-list h2 span.closed:after {
-	content: "\f140";
-}
-
 
 #xmlrpc_trusted_users {
 	height: 200px;
@@ -115,14 +87,6 @@ input[type="checkbox"].indeterminate {
 	background-color: #eee;
 }
 
-div.rest-xmlrpc-data-checker-cb-list input[type="checkbox"]:indeterminate:before {
-	content: "\f460";
-	font-family: dashicons;
-	color: #1e8cbe;
-	margin-top: 7px;
-	display: inline-block;
-}
-
 /* Users list */
 th.column-rest-xmlrpc-data-checker-status {
 	text-align: center;
@@ -159,5 +123,37 @@ td.column-rest-xmlrpc-data-checker-status div.cell {
 
 	td.column-rest-xmlrpc-data-checker-status div.table {
 		margin: inherit;
+	}
+}
+
+/* Flex tree */
+ul.flex-tree {
+	padding-left: 0;
+}
+ul.flex-tree li span.closed:after,
+ul.flex-tree li span.open:after {
+	content: "\f142";
+	font-family: dashicons;
+	color: #72777c;
+	vertical-align: bottom;
+}
+ul.flex-tree li span.open:after {
+	content: "\f140";
+}
+
+ul.flex-tree input[type="checkbox"]:indeterminate:before {
+	content: "\f460";
+	font-family: dashicons;
+	color: #1e8cbe;
+	margin-top: 7px;
+	display: inline-block;
+}
+
+@media screen and ( max-width: 782px ) {
+
+	ul.flex-tree input[type="checkbox"]:indeterminate:before {
+		margin-top: 12px;
+		font-size: 20px;
+		font-weight: bold;
 	}
 }
