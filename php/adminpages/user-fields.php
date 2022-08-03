@@ -1,6 +1,6 @@
 <?php
 /**
- * User fields.
+ * User fields settings template part.
  *
  * @package rest-xmlrpc-data-checker
  */
