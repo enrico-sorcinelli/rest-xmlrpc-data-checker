@@ -11,7 +11,7 @@
  * Author URI:  https://github.com/enrico-sorcinelli/rest-xmlrpc-data-checker/graphs/contributors
  * Text Domain: rest-xmlrpc-data-checker
  * Domain Path: /languages/
- * Version:     1.3.2
+ * Version:     1.4.0
  * License:     GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugins constants.
-define( 'REST_XMLRPC_DATA_CHECKER_VERSION', '1.3.2' );
+define( 'REST_XMLRPC_DATA_CHECKER_VERSION', '1.4.0' );
 define( 'REST_XMLRPC_DATA_CHECKER_BASEDIR', dirname( __FILE__ ) );
 define( 'REST_XMLRPC_DATA_CHECKER_BASEURL', plugin_dir_url( __FILE__ ) );
 
