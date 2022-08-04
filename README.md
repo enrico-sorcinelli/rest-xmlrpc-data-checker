@@ -86,6 +86,10 @@ Filter XML-RPC post data to be inserted via XML-RPC before to insert post into d
 
 Yes
 
+### Does it work on Multisite? ###
+
+Yes
+
 ### How do I make REST requests using Basic Authentication?
 
 In the _REST_ tab of plugin settings page you have to:
