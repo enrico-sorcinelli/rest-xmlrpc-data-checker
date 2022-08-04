@@ -101,7 +101,8 @@ module.exports = function( grunt ) {
 				src: [
 					'**/*.php',
 					'!node_modules/**',
-					'!<%= dirs.build %>/**'
+					'!<%= dirs.build %>/**',
+					'!tmp/**'
 				]
 			},
 			options: {
@@ -171,7 +172,8 @@ module.exports = function( grunt ) {
 					'!tests/**',
 					'!Makefile',
 					'!phpcs.xml',
-					'!phpunit.xml'
+					'!phpunit.xml',
+					'!vendor/**'
 				],
 				dest: '<%= dirs.build %>/<%= pkg.name %>/'
 			}
