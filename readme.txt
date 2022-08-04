@@ -3,8 +3,8 @@ Contributors: enrico.sorcinelli
 Tags: json, rest, xmlrpc, api, security, admin, theme
 Requires at least: 4.4
 Requires PHP: 5.2.4
-Tested up to: 5.5
-Stable tag: 1.3.2
+Tested up to: 6.0
+Stable tag: 1.4.0
 License: GPLv2 or later
 
 REST XML-RPC Data Checker allow to check JSON REST and XML-RPC API requests and grant access permissions.
@@ -122,10 +122,15 @@ For REST XML-RPC Data Checker changelog, please see [the Releases page on GitHub
 
 == Upgrade Notice ==
 
+= 1.4.0 =
+
+* Multisite support improvement for superadmin plugin's caps.
+* Tested to the latest WordPress release.
+
 = 1.3.1 =
 
-Allows to use PHP single line comments in trusted network option; allows to prevent to leave blocks comments in `post_content` via XML-RPC.
+* Allows to use PHP single line comments in trusted network option; allows to prevent to leave blocks comments in `post_content` via XML-RPC.
 
 = 1.3.0 =
 
-Trusted networks check over IP address found in HTTP headers added by proxy or load balancer is now disabled by default. It can be enabled on plugin settings page.
+* Trusted networks check over IP address found in HTTP headers added by proxy or load balancer is now disabled by default. It can be enabled on plugin settings page.
