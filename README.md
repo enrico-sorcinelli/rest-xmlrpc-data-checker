@@ -1,4 +1,15 @@
-# REST XML-RPC Data Checker
+# REST XML-RPC Data Checker #
+**Contributors:** enrico.sorcinelli  
+**Tags:** json, rest, xmlrpc, api, security, admin, theme  
+**Requires at least:** 4.4  
+**Requires PHP:** 5.2.4  
+**Tested up to:** 6.0  
+**Stable tag:** 1.4.0  
+**License:** GPLv2 or later  
+
+REST XML-RPC Data Checker allow to check JSON REST and XML-RPC API requests and grant access permissions.
+
+## Description ##
 
 JSON REST API and XML-RPC API are powerful ways to remotely interact with WordPress.
 
@@ -13,7 +24,7 @@ In particular the REST API is turned on also for unlogged users. This means that
 
 Even if you could do the stuff by writing your own code using native filters, this plugin aims to help you to control JSON REST API and XML-RPC API accesses from the administration panel or programmatically by a simple API filter.
 
-# Basic Features
+== Basic Features
 
 * **Disable REST API** interface for unlogged users.
 * **Disable JSONP support** on REST API.
@@ -27,63 +38,55 @@ Even if you could do the stuff by writing your own code using native filters, th
 * **Setup trusted users, IP/Networks and methods** for XML-RPC requests.
 * **Show user's access informations** in users list administration screen.
 
-# Installation
+## Installation ##
 
 This section describes how to install the plugin and get it working.
 
 1. Upload the plugin files to the `/wp-content/plugins/rest-xmlrpc-data-checker` directory, or install the plugin through the WordPress _Plugins_ screen directly.
 1. Activate the plugin through the _Plugins_ screen in WordPress.
 
-# Usage
+## Usage ##
 
-Once the plugin is installed you can configure it in the following ways:
+Once the plugin is installed you can control settings in the following ways:
 
 * Using the _Settings->REST XML-RPC Data Checker_ administration screen.
 * Programmatically, by using `rest_xmlrpc_data_checker_settings` filter (see below).
 
-# API
+## API ##
 
-## Hooks
+### Hooks ###
 
-### `rest_xmlrpc_data_checker_settings`
+**`rest_xmlrpc_data_checker_settings`**
 
 Filters plugin settings values.
 
-```php
-apply_filters( 'rest_xmlrpc_data_checker_settings', array $settings )
-```
+`apply_filters( 'rest_xmlrpc_data_checker_settings', array $settings )`
 
-### `rest_xmlrpc_data_checker_admin_settings`
+**`rest_xmlrpc_data_checker_admin_settings`**
 
 Filter allowing to display or not the plugin settings page in the administration.
 
-```php
-apply_filters( 'rest_xmlrpc_data_checker_admin_settings', boolean $display )
-```
+`apply_filters( 'rest_xmlrpc_data_checker_admin_settings', boolean $display )`
 
-### `rest_xmlrpc_data_checker_rest_error`
+**`rest_xmlrpc_data_checker_rest_error`**
 
-Filter REST authentication error after plugin checks.
+Filter JSON REST authentication error after plugin checks.
 
-```php
-apply_filters( 'rest_xmlrpc_data_checker_rest_error', WP_Error|boolean $result )
-```
+`apply_filters( 'rest_xmlrpc_data_checker_rest_error', WP_Error|boolean $result )`
 
-### `xmlrpc_before_insert_post`
+**`xmlrpc_before_insert_post`**
 
 Filter XML-RPC post data to be inserted via XML-RPC before to insert post into database.
 
-```php
-apply_filters( 'xmlrpc_before_insert_post', array|IXR_Error $content_struct, WP_User $user );
-```
+`apply_filters( 'xmlrpc_before_insert_post', array|IXR_Error $content_struct, WP_User $user )`
 
-# Frequently Asked Questions
+## Frequently Asked Questions ##
 
-## Does it work with Gutenberg?
+### Does it work with Gutenberg? ###
 
-Yes.
+Yes
 
-## How do I make REST requests using Basic Authentication?
+### How do I make REST requests using Basic Authentication?
 
 In the _REST_ tab of plugin settings page you have to:
 
@@ -92,61 +95,52 @@ In the _REST_ tab of plugin settings page you have to:
 * select users whom you want to grant REST access
 * save changes
 
-This way, in HTTP REST requests users have to add `Authorization` HTTP header.
+This way, in HTTP REST external requests, users have to add `Authorization` HTTP header.
 
 In order to generate the `Authorization` HTTP header to use with Basic Authentication you simply have to base64 encode the username and password separated by a colon.
 
 Here is an example in PHP:
-
-```php
-$header = 'Authorization: Basic ' . base64_encode( 'my-user:my-password' );
-```
+###
+`$header = 'Authorization: Basic ' . base64_encode( 'my-user:my-password' );`
 
 [Here you can see several examples](https://gist.github.com/enrico-sorcinelli/d33b6889888e95f710bc50a2090a25cf) in a variety of language.
 
-Note that the Basic Authentication requires sending your username and password with every request, and should only be used over SSL-secured connections or for local development and testing.	
+Note that the Basic Authentication requires sending your username and password with every request, and should only be used over SSL-secured connections or for local development and testing.
 Without SSL you are strongly encouraged to to turn off Basic Authentication in production environments.
 
-# Screenshots 
+## Screenshots ##
 
-## REST settings
+### 1. The JSON REST settings section. ###
+![The JSON REST settings section.](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-1.png)
 
-The REST settings section.
+### 2. The XML-RPC settings section. ###
+![The XML-RPC settings section.](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-2.png)
 
-![REST settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-1.png)
+### 3. The Options settings section. ###
+![The Options settings section.](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-3.png)
 
-## XML-RPC settings
+### 4. Enable XML-RPC and REST interfaces on user profile/user edit pages (available only for users with `edit_users` capability). ###
+![Enable XML-RPC and REST interfaces on user profile/user edit pages (available only for users with `edit_users` capability).](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-4.png)
 
-The XML-RPC settings section.
+### 5. User list administration screen. ###
+![User list administration screen.](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-5.png)
 
-![XML-RPC settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-2.png)
 
-## Options settings
+## Changelog ##
 
-The plugin options section.
+For REST XML-RPC Data Checker changelog, please see [the Releases page on GitHub](https://github.com/enrico-sorcinelli/rest-xmlrpc-data-checker/releases).
 
-![Options settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-3.png)
+## Upgrade Notice ##
 
-## User profile
+### 1.4.0 ###
 
-Enable XML-RPC and REST interfaces on user profile/user edit pages (available only for users with `edit_users` capability).
+* Multisite support improvement for superadmin plugin's caps.
+* Tested to the latest WordPress release.
 
-![Plugin settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-4.png)
+### 1.3.1 ###
 
-## User list administration screen
+* Allows to use PHP single line comments in trusted network option; allows to prevent to leave blocks comments in `post_content` via XML-RPC.
 
-![Plugin settings](https://raw.githubusercontent.com/enrico-sorcinelli/rest-xmlrpc-data-checker/master/assets-wp/screenshot-5.png)
+### 1.3.0 ###
 
-Column with REST and XML-RPC API access informations on users list administration screen.
-
-# License: GPLv2
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+* Trusted networks check over IP address found in HTTP headers added by proxy or load balancer is now disabled by default. It can be enabled on plugin settings page.
