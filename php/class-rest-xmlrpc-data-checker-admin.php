@@ -214,7 +214,7 @@ class Admin {
 
 		wp_enqueue_style(
 			$this->prefix . 'jquery-flex-tree-css',
-			REST_XMLRPC_DATA_CHECKER_BASEURL . 'vendor/jquery-flex-tree/flex-tree-minimal.min.css',
+			REST_XMLRPC_DATA_CHECKER_BASEURL . 'lib/jquery-flex-tree/flex-tree-minimal.min.css',
 			array(),
 			REST_XMLRPC_DATA_CHECKER_VERSION,
 			'screen'
@@ -238,7 +238,7 @@ class Admin {
 
 		wp_enqueue_script(
 			$this->prefix . 'jquery-flex-tree-js',
-			REST_XMLRPC_DATA_CHECKER_BASEURL . 'vendor/jquery-flex-tree/flex-tree.min.js',
+			REST_XMLRPC_DATA_CHECKER_BASEURL . 'lib/jquery-flex-tree/flex-tree.min.js',
 			array(),
 			REST_XMLRPC_DATA_CHECKER_VERSION,
 			false
